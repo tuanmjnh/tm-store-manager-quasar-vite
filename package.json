@@ -1,0 +1,59 @@
+{
+  "name": "tm-store-manager-quasar-vite",
+  "version": "0.0.1",
+  "description": "TM Store Manager",
+  "productName": "TM Store",
+  "author": "tuanmjnh <minhtuan200990@gmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "quasar dev",
+    "add:cap": "quasar mode add capacitor",
+    "android:add": "npx cap add android",
+    "android:copy": "npx cap copy android",
+    "android:sync": "npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:dev": "quasar dev -m capacitor -T android",
+    "android:build": " quasar build -m capacitor -T android",
+    "ios:add": "npx cap add ios",
+    "ios:copy": "npx cap copy ios",
+    "ios:sync": "npx cap sync ios",
+    "ios:open": "npx cap open ios",
+    "ios:dev": "quasar dev -m capacitor -T ios",
+    "ios:build": " quasar build -m capacitor -T ios",
+    "lint": "eslint --ext .js,.vue ./",
+    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
+    "icongenie": "icongenie g -i logo/logo.png",
+    "keytool": "keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 20000",
+    "jarsigner": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keys/tm-store-release-key.keystore dist/capacitor/android/apk/release/app-release-unsigned.apk alias_name",
+    "update": "npm update",
+    "upgrade": "npm upgrade",
+    "upgrade-quasar": "quasar upgrade",
+    "upgrade-quasar:linux": "~/.npm-global/bin/quasar upgrade",
+    "upgrade-quasar:install": "quasar upgrade -i",
+    "upgrade-quasar:install-linux": "~/.npm-global/bin/quasar upgrade -i"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "vue-i18n": "^9.0.0",
+    "vuex": "^4.0.1",
+    "@quasar/extras": "^1.0.0",
+    "quasar": "^2.6.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "eslint-config-prettier": "^8.1.0",
+    "prettier": "^2.5.1",
+    "@intlify/vite-plugin-vue-i18n": "^3.3.1",
+    "@quasar/app-vite": "^1.0.0-alpha.0",
+    "autoprefixer": "^10.4.2"
+  },
+  "engines": {
+    "node": "^18 || ^16 || ^14.19",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}

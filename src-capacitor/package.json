@@ -1,0 +1,12 @@
+{
+  "name": "tm-store-quasar-vite",
+  "version": "0.0.1",
+  "description": "TM Store Quasar",
+  "author": "tuanmjnh <minhtuan200990@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^2.5.0",
+    "@capacitor/cli": "^2.0.0",
+    "@capacitor/core": "^2.0.0"
+  }
+}
