@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "tm-store-api",
+      "path": ".\\tm-store-api"
+    },
+    {
+      "name": "tm-store-manager-quasar-vite",
+      "path": ".\\tm-store-manager-quasar-vite"
+    },
+    {
+ 	"name": "tm-store-quasar-vite",
+      "path": ".\\tm-store-quasar-vite"
+    }
+  ],
+  "settings": {}
+}

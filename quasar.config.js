@@ -29,15 +29,10 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: [
-      'i18n',
-      'axios',
-    ],
+    boot: ["i18n", "axios", 'prototypes', 'middleware', 'axios', 'moment', 'directive'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-    css: [
-      'app.scss'
-    ],
+    css: ['app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -60,7 +55,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -87,20 +82,50 @@ module.exports = configure(function (/* ctx */) {
           // you need to set i18n resource including paths !
           include: path.resolve(__dirname, './src/i18n/**')
         }]
-      ]
+      ],
+      // environment
+      env: ctx.dev
+        ? { // so on dev we'll have
+          APP_NAME: 'TM-Store',
+          API: '/api',// 'http://localhost:8080/api' or proxy '/api',
+          API_UPLOAD: 'http://localhost:8080/uploads',
+          API_PUBLIC: 'http://localhost:8080/public',
+          API_FILE_UPLOAD: '/api/file-manager'
+        }
+        // : { // and on build (production): google cloud
+        //   APP_NAME: 'TM-Store',
+        //   API: 'https://tm-store-api-opkgzsyymq-uc.a.run.app/api',
+        //   API_UPLOAD: 'https://tm-store-api-opkgzsyymq-uc.a.run.app/uploads',
+        //   API_PUBLIC: 'https://tm-store-api-opkgzsyymq-uc.a.run.app/public',
+        //   API_FILE_UPLOAD: 'https://tm-store-api-opkgzsyymq-uc.a.run.app/api/file-manager'
+        // }
+        : { // and on build (production): herokuapp
+          APP_NAME: 'TM-Store',
+          API: 'https://tm-store-api.herokuapp.com/api',
+          API_UPLOAD: 'https://tm-store-api.herokuapp.com/uploads',
+          API_PUBLIC: 'https://tm-store-api.herokuapp.com/public',
+          API_FILE_UPLOAD: 'https://tm-store-api.herokuapp.com/api/file-manager'
+        }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
       open: false, // opens browser window automatically
-      port: 8100
+      port: 8000,
+      proxy: {
+        '/api': {
+          // target: 'https://tm-store-api-opkgzsyymq-uc.a.run.app',
+          target: 'http://localhost:8080',
+          // pathRewrite: { '^/api': '' },
+          changeOrigin: true,
+          secure: true
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
-
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
@@ -112,7 +137,16 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify', 'AppFullscreen', 'Dialog'],
+      config: {
+        notify: {
+          position: 'top',
+          timeout: 5000,
+          color: 'blue-grey',
+          textColor: 'white',
+          actions: [{ icon: 'close', color: 'white' }]
+        }
+      }
     },
 
     // animations: 'all', // --- includes all animations
