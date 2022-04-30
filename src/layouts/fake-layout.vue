@@ -4,9 +4,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 export default defineComponent({
-  name: 'fake-layout',
+  name: 'FakeLayout',
   props: {
     routePath: { type: String, default: null }
   },
@@ -16,17 +16,17 @@ export default defineComponent({
   //     else return useRoute().path
   //   }
   // }
-  // setup (props) {
-  //   const $route = useRoute()
-  //   return {
-  //     onRoutePath () {
-  //       let rs = null
-  //       if (props.routePath) rs = props.routePath
-  //       else rs = $route.path
-  //       return rs
-  //     }
-  //   }
-  // }
+  setup (props) {
+    //   const $route = useRoute()
+    //   return {
+    //     onRoutePath () {
+    //       let rs = null
+    //       if (props.routePath) rs = props.routePath
+    //       else rs = $route.path
+    //       return rs
+    //     }
+    //   }
+  }
 })
 </script>
 

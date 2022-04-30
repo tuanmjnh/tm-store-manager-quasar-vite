@@ -89,8 +89,8 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: "TypesAdd",
   components: {
-    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes')),
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs'))
+    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes/index.vue')),
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue'))
   },
   setup () {
     const $store = useStore()

@@ -45,7 +45,7 @@
 
 <script>
 import { defineComponent, ref, watch } from 'vue';
-import { getParent, findNode } from '../../../../../global/utils/tree';
+import { getParent, findNode } from '../../../utils/tree';
 export default defineComponent({
   name: 'CategorySelectComponent',
   // components: { tmTree: defineAsyncComponent(() => import('components/tm-tree')) },

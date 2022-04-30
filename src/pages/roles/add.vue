@@ -78,12 +78,12 @@
 <script>
 import { defineComponent, defineAsyncComponent, ref } from "vue";
 import { useStore } from 'vuex'
-import { dynamic } from '@/router/routes'
-import { RandomColor } from '../../../../global/utils/color'
+import { dynamic } from '../../router/routes'
+import { RandomColor } from '../../utils/color'
 export default defineComponent({
   name: "RolesAdd",
   components: {
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs'))
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue'))
   },
   setup () {
     const $store = useStore()

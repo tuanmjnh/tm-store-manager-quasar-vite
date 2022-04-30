@@ -1,4 +1,5 @@
 export default {
+  layout: state => state.app.layout,
   apiUrl: state => state.app.apiUrl,
   apiUpload: state => state.app.apiUpload,
   avatar: state => state.app.avatar,

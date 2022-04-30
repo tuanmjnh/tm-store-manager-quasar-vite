@@ -1,6 +1,6 @@
-import { store } from "quasar/wrappers"
+import { store } from "quasar/wrappers";
 import { createStore, createLogger } from 'vuex'
-import getters from './getters'
+import getters from './getters';
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -8,9 +8,9 @@ const debug = process.env.NODE_ENV !== 'production'
 
 /*
  * If not building with SSR mode, you can
- * directly export the Store instantiation
+ * directly export the Store instantiation;
  *
- * The function below can be async too either use
+ * The function below can be async too; either use
  * async/await or return a Promise which resolves
  * with the Store instance.
  */
@@ -19,16 +19,18 @@ const debug = process.env.NODE_ENV !== 'production'
  * If not building with SSR mode, you can
  * directly export the Store instantiation
  */
-const modulesFiles = import.meta.globEager('./modules/*.js')
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+const modulesFiles = require.context('../../../global/store/modules', true, /\.js$/);
 
 // you do not need `import app from './modules/app'`
 // it will auto require all vuex module from modules file
-const modules = Object.keys(modulesFiles).reduce((modules, path) => {
-  const moduleName = path.replace('./modules/', '').replace(/\.\w+$/, '')
-  const value = modulesFiles[path]
-  modules[moduleName] = value.default
-  return modules
-}, {})
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1');
+  const value = modulesFiles(modulePath);
+  modules[moduleName] = value.default;
+  return modules;
+}, {});
 
 // export default store(function (/* { ssrContext } */) {
 //   const Store = createStore({
@@ -39,10 +41,10 @@ const modules = Object.keys(modulesFiles).reduce((modules, path) => {
 //     // enable strict mode (adds overhead!)
 //     // for dev mode and --debug builds only
 //     strict: process.env.DEBUGGING,
-//   })
+//   });
 
-//   return Store
-// })
+//   return Store;
+// });
 
 export default createStore({
   modules,

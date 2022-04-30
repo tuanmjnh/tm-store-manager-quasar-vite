@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import { constant, dynamic } from './routes'
-import fakeLayout from '@/layouts/fake-layout'
+// import fakeLayout from 'layouts/fake-layout'
 
 /*
  * If not building with SSR mode, you can

@@ -49,7 +49,7 @@ import { defineComponent, defineAsyncComponent, ref, onMounted } from "vue";
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 export default defineComponent({
-  name: "Dashboard",
+  name: "DashboardIndex",
   components: {
     // lineChart: defineAsyncComponent(() => import('components/chartjs/lineChart.vue')),
     barChart: defineAsyncComponent(() => import('components/chartjs/barChart.vue')),

@@ -220,14 +220,14 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: "NewsAdd",
   components: {
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs')),
-    tmEditor: defineAsyncComponent(() => import('@/components/tm-editor')),
-    tmFileList: defineAsyncComponent(() => import('@/components/tm-file-list')),
-    tmUpload: defineAsyncComponent(() => import('@/components/tm-upload')),
-    tmFileManager: defineAsyncComponent(() => import('@/components/tm-file-manager')),
-    tmTags: defineAsyncComponent(() => import('@/components/tm-tags')),
-    tmAttributes: defineAsyncComponent(() => import('@/components/tm-attributes')),
-    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category'))
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue')),
+    tmEditor: defineAsyncComponent(() => import('components/tm-editor/index.vue')),
+    tmFileList: defineAsyncComponent(() => import('components/tm-file-list/index.vue')),
+    tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
+    tmFileManager: defineAsyncComponent(() => import('components/tm-file-manager/index.vue')),
+    tmTags: defineAsyncComponent(() => import('components/tm-tags/index.vue')),
+    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes/index.vue')),
+    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue'))
   },
   setup (props, { emit }) {
     const $store = useStore()

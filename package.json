@@ -34,22 +34,31 @@
     "upgrade-quasar:install-linux": "~/.npm-global/bin/quasar upgrade -i"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "vue-i18n": "^9.0.0",
-    "vuex": "^4.0.1",
-    "@quasar/extras": "^1.0.0",
-    "quasar": "^2.6.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "@quasar/extras": "^1.13.6",
+    "axios": "^0.27.2",
+    "chart.js": "^3.7.1",
+    "chartjs-plugin-zoom": "^1.2.1",
+    "easyqrcodejs": "^4.4.10",
+    "html5-qrcode": "^2.2.1",
+    "js-cookie": "^3.0.1",
+    "jsbarcode": "^3.11.5",
+    "moment": "^2.29.3",
+    "quasar": "^2.6.6",
+    "vue": "^3.2.33",
+    "vue-chartjs": "^4.0.7",
+    "vue-i18n": "^9.1.9",
+    "vue-router": "^4.0.14",
+    "vuex": "^4.0.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "eslint": "^8.10.0",
-    "eslint-plugin-vue": "^8.5.0",
-    "eslint-config-prettier": "^8.1.0",
-    "prettier": "^2.5.1",
-    "@intlify/vite-plugin-vue-i18n": "^3.3.1",
-    "@quasar/app-vite": "^1.0.0-alpha.0",
-    "autoprefixer": "^10.4.2"
+    "@intlify/vite-plugin-vue-i18n": "^3.4.0",
+    "@quasar/app-vite": "^1.0.0-beta.14",
+    "autoprefixer": "^10.4.5",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "prettier": "^2.6.2"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",

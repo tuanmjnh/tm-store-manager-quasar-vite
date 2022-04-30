@@ -139,9 +139,9 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "OrdersAdd",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    pList: defineAsyncComponent(() => import('pages/products/components/list')),
-    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode'))
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    pList: defineAsyncComponent(() => import('pages/products/components/list.vue')),
+    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode/index.vue'))
   },
   setup () {
     const $store = useStore()

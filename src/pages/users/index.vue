@@ -190,12 +190,12 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { regionConstant } from '@/boot/i18n'
+import { regionConstant } from 'boot/i18n'
 export default defineComponent({
   name: "UserIndex",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    addItem: defineAsyncComponent(() => import('./add'))
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    addItem: defineAsyncComponent(() => import('./add.vue'))
   },
   setup () {
     const $router = useRouter()

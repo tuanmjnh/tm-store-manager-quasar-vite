@@ -176,11 +176,11 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: "ImportIndex",
   components: {
-    addItem: defineAsyncComponent(() => import('./add')),
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    viewDetails: defineAsyncComponent(() => import('components/view-details')),
-    viewTotal: defineAsyncComponent(() => import('components/view-total')),
-    tmPrinter: defineAsyncComponent(() => import('components/tm-printer'))
+    addItem: defineAsyncComponent(() => import('./add.vue')),
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    viewDetails: defineAsyncComponent(() => import('components/view-details/index.vue')),
+    viewTotal: defineAsyncComponent(() => import('components/view-total/index.vue')),
+    tmPrinter: defineAsyncComponent(() => import('components/tm-printer/index.vue'))
   },
   setup () {
     const $router = useRouter()

@@ -29,8 +29,8 @@ import { defineComponent, defineAsyncComponent, ref } from "vue";
 export default defineComponent({
   name: "ProfileLayout",
   components: {
-    profile: defineAsyncComponent(() => import('pages/profile/index')),
-    avatar: defineAsyncComponent(() => import('pages/profile/avatar'))
+    profile: defineAsyncComponent(() => import('pages/profile/index.vue')),
+    avatar: defineAsyncComponent(() => import('pages/profile/avatar.vue'))
   },
   setup () {
     const isDialog = ref(false)

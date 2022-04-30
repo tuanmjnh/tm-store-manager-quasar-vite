@@ -130,8 +130,8 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: "ProductIndex",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category'))
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue'))
   },
   setup (props, { emit }) {
     const $router = useRouter()

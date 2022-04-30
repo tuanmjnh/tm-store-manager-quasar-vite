@@ -6,6 +6,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Import",
+  name: "ImportPage",
 })
 </script>

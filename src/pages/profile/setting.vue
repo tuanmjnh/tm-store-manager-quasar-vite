@@ -190,7 +190,7 @@ import { defineComponent, ref, computed } from "vue";
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 export default defineComponent({
-  name: "Setting",
+  name: "ProfileSetting",
   setup () {
     const $store = useStore()
     const $q = useQuasar()

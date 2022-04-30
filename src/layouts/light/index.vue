@@ -57,12 +57,12 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: "MainLayout",
   components: {
-    headerQrcode: defineAsyncComponent(() => import('../components/header-qrcode')),
-    headerSearch: defineAsyncComponent(() => import('../components/header-search')),
-    headerNotification: defineAsyncComponent(() => import('../components/header-notification')),
-    drawerProfile: defineAsyncComponent(() => import('../components/drawer-profile')),
-    drawerItem: defineAsyncComponent(() => import('../components/drawer-item')),
-    menuBottom: defineAsyncComponent(() => import('../components/menu-bottom'))
+    headerQrcode: defineAsyncComponent(() => import('../components/header-qrcode.vue')),
+    headerSearch: defineAsyncComponent(() => import('../components/header-search.vue')),
+    headerNotification: defineAsyncComponent(() => import('../components/header-notification.vue')),
+    drawerProfile: defineAsyncComponent(() => import('../components/drawer-profile.vue')),
+    drawerItem: defineAsyncComponent(() => import('../components/drawer-item.vue')),
+    menuBottom: defineAsyncComponent(() => import('../components/menu-bottom.vue'))
   },
   setup () {
     const $route = useRoute()

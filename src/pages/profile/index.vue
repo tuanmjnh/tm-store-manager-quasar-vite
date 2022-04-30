@@ -96,11 +96,11 @@ import { defineComponent, defineAsyncComponent, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default defineComponent({
-  name: "Profile",
+  name: "ProfileIndex",
   components: {
-    information: defineAsyncComponent(() => import('./information')),
-    security: defineAsyncComponent(() => import('./security')),
-    setting: defineAsyncComponent(() => import('./setting'))
+    information: defineAsyncComponent(() => import('./information.vue')),
+    security: defineAsyncComponent(() => import('./security.vue')),
+    setting: defineAsyncComponent(() => import('./setting.vue'))
   },
   setup () {
     const $route = useRoute()

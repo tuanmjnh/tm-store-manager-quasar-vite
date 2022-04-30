@@ -102,7 +102,7 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "ConfigsIndex",
   components: {
-    addItem: defineAsyncComponent(() => import('./add')),
+    addItem: defineAsyncComponent(() => import('./add.vue')),
     // tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item'))
   },
   setup () {

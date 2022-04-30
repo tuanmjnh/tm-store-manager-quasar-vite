@@ -214,16 +214,16 @@
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
-import { normalize } from '../../../../global/utils/search'
-import { regionConstant } from '@/boot/i18n'
+import { normalize } from '../../utils/search'
+import { regionConstant } from 'boot/i18n'
 export default defineComponent({
   name: "UserAdd",
   components: {
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs')),
-    tmFileList: defineAsyncComponent(() => import('@/components/tm-file-list')),
-    tmUpload: defineAsyncComponent(() => import('@/components/tm-upload')),
-    tmFileManager: defineAsyncComponent(() => import('@/components/tm-file-manager')),
-    // tmQrcodegenerator: defineAsyncComponent(() => import('@/components/tm-qrcode-generator')),
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue')),
+    tmFileList: defineAsyncComponent(() => import('components/tm-file-list/index.vue')),
+    tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
+    tmFileManager: defineAsyncComponent(() => import('components/tm-file-manager/index.vue')),
+    // tmQrcodegenerator: defineAsyncComponent(() => import('components/tm-qrcode-generator/index.vue')),
   },
   setup (props, { emit }) {
     const $store = useStore()

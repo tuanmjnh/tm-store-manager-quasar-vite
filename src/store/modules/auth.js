@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
-import { Router, generateRoutes, resetRouter, constant } from '@/router'
-import { api } from '@/boot/axios'
+import { Router, generateRoutes, resetRouter, constant } from '../../router'
+import { api } from '../../boot/axios'
 const collection = '/auth'
 
 const state = {

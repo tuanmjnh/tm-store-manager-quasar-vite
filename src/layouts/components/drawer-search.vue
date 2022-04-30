@@ -26,7 +26,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'drawer-search',
   components: {
-    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode')),
+    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode/index.vue')),
   },
   props: {
     isPlaceholder: { type: Boolean, default: true }

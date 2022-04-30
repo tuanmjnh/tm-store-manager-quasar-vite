@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout">
+  <component :is="component">
     <router-view />
   </component>
 </template>
@@ -9,18 +9,19 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 export default defineComponent({
   name: "App",
-  components: {
-    light: defineAsyncComponent(() => import('./layouts/light')),
-    login: defineAsyncComponent(() => import('./layouts/login'))
-  },
+  // components: {
+  //   light: defineAsyncComponent(() => import('layouts/light')),
+  //   login: defineAsyncComponent(() => import('layouts/login'))
+  // },
   setup () {
     const $q = useQuasar()
     const $store = useStore()
-    const layout = computed(() => {
+    const layout = computed(() => $store.getters.layout)
+    const component = computed(() => {
       if ($store.state.auth.verified) {
-        return 'light'
+        return defineAsyncComponent(() => import(`./layouts/${layout.value}/index.vue`))
       } else {
-        return 'login'
+        return defineAsyncComponent(() => import('./layouts/fake-layout.vue'))
       }
     })
     $store.commit('settings/INIT')
@@ -32,7 +33,7 @@ export default defineComponent({
     // $store.dispatch('configs/get').then(x => {
     //   console.log(x)
     // })
-    return { layout }
+    return { component }
   }
 });
 </script>

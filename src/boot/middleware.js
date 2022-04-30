@@ -1,19 +1,19 @@
-import { Router } from '@/router'
-import store from '@/store'
+import { Router } from '../router'
+import store from '../store'
 // import * as auth from '@/api/auth'
 // import * as userSetting from '@/api/user-setting'
-import NProgress from 'nprogress' // progress bar
-import '@/css/nprogress.css' // progress bar style
+// import NProgress from 'nprogress' // progress bar
+// import '@/css/nprogress.css' // progress bar style
 
 // NProgress Configuration
-NProgress.configure({
-  showSpinner: false,
-  easing: 'ease',
-  speed: 200,
-  trickle: true,
-  trickleSpeed: 200,
-  minimum: 0.08
-})
+// NProgress.configure({
+//   showSpinner: false,
+//   easing: 'ease',
+//   speed: 200,
+//   trickle: true,
+//   trickleSpeed: 200,
+//   minimum: 0.08
+// })
 
 export function onSetGlobalData () {
   return new Promise(async (resolve, reject) => {
@@ -28,14 +28,14 @@ export function onSetGlobalData () {
 const whiteList = ['/login'] // no redirect whitelist
 Router.beforeEach(async (to, from, next) => {
   // start progress bar
-  NProgress.start()
+  // NProgress.start()
   await onSetGlobalData()
   const token = store.state.auth.token
   if (token) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
-      NProgress.done()
+      // NProgress.done()
     } else {
       // determine whether the user has obtained his permission roles through getInfo
       if (store.state.auth.user && store.state.auth.routes) {
@@ -73,7 +73,7 @@ Router.beforeEach(async (to, from, next) => {
           // console.log(err)
           next(`/login?redirect=${to.path}`)
           // stop progress bar
-          NProgress.done()
+          // NProgress.done()
         }
       }
       // // Check is added routes
@@ -100,12 +100,12 @@ Router.beforeEach(async (to, from, next) => {
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
-      NProgress.done()
+      // NProgress.done()
     }
   }
 })
 
 Router.afterEach(() => {
   // finish progress bar
-  NProgress.done()
+  // NProgress.done()
 })

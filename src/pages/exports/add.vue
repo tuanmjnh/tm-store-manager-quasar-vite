@@ -240,12 +240,12 @@ import Cookies from 'js-cookie'
 export default defineComponent({
   name: "ExportAdd",
   components: {
-    pList: defineAsyncComponent(() => import('pages/products/components/list')),
-    tmLoadFiles: defineAsyncComponent(() => import('components/tm-load-files')),
-    viewDetails: defineAsyncComponent(() => import('components/view-details')),
-    viewTotal: defineAsyncComponent(() => import('components/view-total')),
-    tmPrinter: defineAsyncComponent(() => import('components/tm-printer')),
-    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode'))
+    pList: defineAsyncComponent(() => import('pages/products/components/list.vue')),
+    tmLoadFiles: defineAsyncComponent(() => import('components/tm-load-files/index.vue')),
+    viewDetails: defineAsyncComponent(() => import('components/view-details/index.vue')),
+    viewTotal: defineAsyncComponent(() => import('components/view-total/index.vue')),
+    tmPrinter: defineAsyncComponent(() => import('components/tm-printer/index.vue')),
+    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode/index.vue'))
   },
   setup () {
     const $store = useStore()

@@ -7,6 +7,7 @@
 <script>
 import { defineComponent } from 'vue';
 export default defineComponent({
+  name: 'LoadingLayout',
   setup () {
     const style = {
       height: `${window.screen.height}px`,

@@ -62,11 +62,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { normalize } from '../../../../global/utils/search'
+import { normalize } from '../../utils/search'
 export default defineComponent({
   name: 'CategoryIndex',
   components: {
-    addItem: defineAsyncComponent(() => import('./add'))
+    addItem: defineAsyncComponent(() => import('./add.vue'))
   },
   setup () {
     const $router = useRouter()

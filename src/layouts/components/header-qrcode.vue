@@ -12,7 +12,7 @@ import { defineComponent, defineAsyncComponent, ref } from "vue";
 export default defineComponent({
   name: "DrawerQRCodeLayout",
   components: {
-    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode')),
+    tmHtml5qrcode: defineAsyncComponent(() => import('components/tm-html5qrcode/index.vue')),
   },
   setup () {
     const isDialog = ref(false)

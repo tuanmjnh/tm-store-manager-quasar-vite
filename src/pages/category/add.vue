@@ -174,14 +174,14 @@
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
-import { RandomColor } from '../../../../global/utils/color'
+import { RandomColor } from '../../utils/color'
 export default defineComponent({
   name: "CategoryAdd",
   components: {
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs')),
-    // tmUpload: defineAsyncComponent(() => import('components/tm-upload')),
-    tmTags: defineAsyncComponent(() => import('components/tm-tags')),
-    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes'))
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue')),
+    // tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
+    tmTags: defineAsyncComponent(() => import('components/tm-tags/index.vue')),
+    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes/index.vue'))
   },
   props: {
     dialog: { type: Boolean, default: false },

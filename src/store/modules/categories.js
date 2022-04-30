@@ -1,4 +1,4 @@
-import { api } from '@/boot/axios'
+import { api } from '../../boot/axios'
 import { generateCategory } from '../../utils/tree'
 const collection = '/categories';
 

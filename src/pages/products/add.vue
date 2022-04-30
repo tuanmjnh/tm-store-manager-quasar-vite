@@ -224,21 +224,21 @@
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
-import { normalize } from '../../../../global/utils/search'
-import { getRndInteger } from '../../../../global/utils/number'
+import { normalize } from '../../utils/search'
+import { getRndInteger } from '../../utils/number'
 export default defineComponent({
   name: "ProductAdd",
   components: {
-    tmTabs: defineAsyncComponent(() => import('components/tm-tabs')),
-    tmEditor: defineAsyncComponent(() => import('@/components/tm-editor')),
-    tmFileList: defineAsyncComponent(() => import('@/components/tm-file-list')),
-    tmUpload: defineAsyncComponent(() => import('@/components/tm-upload')),
-    tmFileManager: defineAsyncComponent(() => import('@/components/tm-file-manager')),
-    tmTags: defineAsyncComponent(() => import('@/components/tm-tags')),
-    tmAttributes: defineAsyncComponent(() => import('@/components/tm-attributes')),
-    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category')),
-    tmQrcodegenerator: defineAsyncComponent(() => import('@/components/tm-qrcode-generator')),
-    tmBarcodegenerator: defineAsyncComponent(() => import('@/components/tm-barcode-generator'))
+    tmTabs: defineAsyncComponent(() => import('components/tm-tabs/index.vue')),
+    tmEditor: defineAsyncComponent(() => import('components/tm-editor/index.vue')),
+    tmFileList: defineAsyncComponent(() => import('components/tm-file-list/index.vue')),
+    tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
+    tmFileManager: defineAsyncComponent(() => import('components/tm-file-manager/index.vue')),
+    tmTags: defineAsyncComponent(() => import('components/tm-tags/index.vue')),
+    tmAttributes: defineAsyncComponent(() => import('components/tm-attributes/index.vue')),
+    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue')),
+    tmQrcodegenerator: defineAsyncComponent(() => import('components/tm-qrcode-generator/index.vue')),
+    tmBarcodegenerator: defineAsyncComponent(() => import('components/tm-barcode-generator/index.vue'))
   },
   emits: ['onFinish'],
   setup (props, { emit }) {

@@ -196,9 +196,9 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "WarehouseIndex",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    addItem: defineAsyncComponent(() => import('pages/products/add')),
-    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category'))
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    addItem: defineAsyncComponent(() => import('pages/products/add.vue')),
+    selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue'))
   },
   setup () {
     const $router = useRouter()

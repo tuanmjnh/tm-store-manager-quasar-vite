@@ -162,10 +162,10 @@
 <script>
 import { defineComponent, ref, computed, watch } from "vue";
 import { useStore } from 'vuex'
-import { regionConstant } from '@/boot/i18n'
-import { validEmail } from '../../../../global/utils/validate'
+import { regionConstant } from 'boot/i18n'
+import { validEmail } from '../../utils/validate'
 export default defineComponent({
-  name: "Information",
+  name: "ProfileInformation",
   setup () {
     const $store = useStore()
     const regions = ref(regionConstant)

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
-import { api } from '@/boot/axios'
-import { setI18nLanguage } from '@/boot/i18n'
+import { api } from '../../boot/axios'
+import { setI18nLanguage } from '../../boot/i18n'
 const collection = '/settings'
 const COOKIE_NAME = 'settings'
 const COOKIE_DATA = Cookies.get(COOKIE_NAME) ? JSON.parse(Cookies.get(COOKIE_NAME)) : {}

@@ -2,33 +2,17 @@ import { boot } from 'quasar/wrappers'
 // import { createI18n } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
 import Cookies from 'js-cookie'
-import regionConstant from '../i18n/region'
+import regionConstant from '../../../global/i18n/region'
 const defaultLanguage = 'vi-VN'
 const settings = Cookies.get('settings') ? JSON.parse(Cookies.get('settings')) : null
 let i18n = null
 
 // import js locales
 // https://webpack.js.org/guides/dependency-management/#requirecontext
-// const localesFiles = require.context('../i18n/locales', true, /\.js$/)
-// const locales = localesFiles.keys().reduce((locales, modulePath) => {
-//   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-//   const value = localesFiles(modulePath)
-//   locales[moduleName] = value.default
-//   return locales
-// }, {})
-
-// const modules = import.meta.glob('../i18n/locales/*.js')
-// for (const path in modules) {
-//   modules[path]().then((mod) => {
-//     // console.log(mod.default)
-//     const moduleName = path.replace('../i18n/locales/', '').replace(/\.\w+$/, '')
-//     console.log(mod)
-//   })
-// }
-const modules = import.meta.globEager('../i18n/locales/*.js')
-const locales = Object.keys(modules).reduce((locales, path) => {
-  const moduleName = path.replace('../i18n/locales/', '').replace(/\.\w+$/, '')
-  const value = modules[path]
+const localesFiles = require.context('../../../global/i18n/locales', true, /\.js$/)
+const locales = localesFiles.keys().reduce((locales, modulePath) => {
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = localesFiles(modulePath)
   locales[moduleName] = value.default
   return locales
 }, {})
@@ -103,7 +87,6 @@ const Init = (locale) => {
     fallbackLocale: locale,
     messages: locales
   })
-
   document.querySelector('html').setAttribute('lang', locale)
   return i18n
 }
@@ -131,7 +114,6 @@ else
 // return i18n
 // }
 
-// console.log(i18n.global.messages)
 export default boot(({ app }) => {
   // Set i18n instance on app
   app.use(i18n)

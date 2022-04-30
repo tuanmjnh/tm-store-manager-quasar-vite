@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, h, PropType } from 'vue'
+import { defineComponent, h, /*PropType*/ } from 'vue'
 
 import { Bar } from 'vue-chartjs'
 
@@ -11,7 +11,7 @@ import {
   BarElement,
   CategoryScale,
   LinearScale,
-  Plugin
+  // Plugin
 } from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)

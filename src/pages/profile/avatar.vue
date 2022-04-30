@@ -102,11 +102,11 @@ import { defineComponent, defineAsyncComponent, ref } from "vue"
 import { useStore } from 'vuex'
 import axios from 'axios'
 export default defineComponent({
-  name: "Avatar",
+  name: "ProfileAvatar",
   components: {
-    tmUpload: defineAsyncComponent(() => import('components/tm-upload')),
-    tmFileManager: defineAsyncComponent(() => import('@/components/tm-file-manager')),
-    tmCameracaptures: defineAsyncComponent(() => import('@/components/tm-camera-captures'))
+    tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
+    tmFileManager: defineAsyncComponent(() => import('components/tm-file-manager/index.vue')),
+    tmCameracaptures: defineAsyncComponent(() => import('components/tm-camera-captures/index.vue'))
   },
   setup () {
     const $store = useStore()

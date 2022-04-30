@@ -226,11 +226,11 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "OrdersIndex",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item')),
-    viewDetails: defineAsyncComponent(() => import('components/view-details')),
-    viewTotal: defineAsyncComponent(() => import('components/view-total')),
-    tmPrinter: defineAsyncComponent(() => import('components/tm-printer')),
-    addItem: defineAsyncComponent(() => import('./add')),
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    viewDetails: defineAsyncComponent(() => import('components/view-details/index.vue')),
+    viewTotal: defineAsyncComponent(() => import('components/view-total/index.vue')),
+    tmPrinter: defineAsyncComponent(() => import('components/tm-printer/index.vue')),
+    addItem: defineAsyncComponent(() => import('./add.vue')),
   },
   setup () {
     const $store = useStore()

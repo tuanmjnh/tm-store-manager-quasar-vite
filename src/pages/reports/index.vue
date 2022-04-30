@@ -105,12 +105,12 @@
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
-import { DynamicColors } from '../../../../global/utils/color'
+import { DynamicColors } from '../../utils/color'
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import zoomPlugin from 'chartjs-plugin-zoom'
 Vue3ChartJs.registerGlobalPlugins([zoomPlugin])
 export default defineComponent({
-  name: 'StoreReport',
+  name: 'ReportIndex',
   components: {
     Vue3ChartJs
   },

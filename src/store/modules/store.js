@@ -1,4 +1,4 @@
-import { api } from '@/boot/axios'
+import { api } from '../../boot/axios'
 const collectionImports = '/product-imports'
 const collectionExports = '/product-exports'
 const collectionReports = '/product-reports'

@@ -24,11 +24,11 @@
 <script>
 import { defineComponent, defineAsyncComponent, ref, watch } from "vue";
 import { useStore } from 'vuex'
-import { RandomColor } from '../../../../global/utils/color'
+import { RandomColor } from '../../utils/color'
 export default defineComponent({
   name: "drawer-item",
   components: {
-    fakeComponent: defineAsyncComponent(() => import('layouts/fake-component'))
+    fakeComponent: defineAsyncComponent(() => import('layouts/fake-component.vue'))
   },
   props: {
     options: { type: Array, required: true },

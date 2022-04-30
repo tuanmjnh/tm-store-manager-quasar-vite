@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" :class="$q.dark.isActive?'':'bg-gradient'">
-    <loading :class="isSpinner?'':'hidden'" />
+    <!-- <loading :class="isSpinner?'':'hidden'" /> -->
     <!-- <div v-if="!$store.state.auth.verified" class="window-height window-width row justify-center items-center"> -->
     <div :class="`window-from window-width row justify-center items-center ${isSpinner?'hidden':''}`">
       <div class="col-10 text-center q-mb-md bg-w">
@@ -79,10 +79,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 export default defineComponent({
-  name: 'Login',
-  components: {
-    loading: defineAsyncComponent(() => import('../loading'))
-  },
+  name: 'LoginLayout',
+  // components: {
+  //   loading: defineAsyncComponent(() => import('../loading/index.vue'))
+  // },
   setup () {
     // library core
     const $route = useRoute()

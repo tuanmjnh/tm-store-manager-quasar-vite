@@ -106,7 +106,7 @@ import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 // import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 import Chart from 'chart.js/auto'
-import { DynamicColors } from '../../../../global/utils/color'
+import { DynamicColors } from '../../utils/color'
 export default defineComponent({
   name: "ReportIndex",
   setup () {

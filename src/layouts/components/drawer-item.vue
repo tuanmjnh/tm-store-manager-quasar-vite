@@ -28,11 +28,11 @@ import { defineComponent, defineAsyncComponent, ref, computed, watch } from 'vue
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { openURL } from 'quasar'
-import { isExternal } from '../../../../global/utils/validate'
+import { isExternal } from '../../utils/validate'
 export default defineComponent({
   name: 'DrawerItemLayout',
   components: {
-    fakeComponent: defineAsyncComponent(() => import('layouts/fake-component'))
+    fakeComponent: defineAsyncComponent(() => import('layouts/fake-component.vue'))
   },
   props: {
     // items: { type: Array, default: () => [] }

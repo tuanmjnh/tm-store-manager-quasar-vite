@@ -26,7 +26,7 @@ import { defineComponent, defineAsyncComponent, ref } from "vue";
 export default defineComponent({
   name: "NotificationLayout",
   components: {
-    notification: defineAsyncComponent(() => import('pages/notification/index'))
+    notification: defineAsyncComponent(() => import('pages/notification/index.vue'))
   },
   setup () {
     const isMaximized = ref(true)

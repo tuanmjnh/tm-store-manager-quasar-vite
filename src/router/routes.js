@@ -1,5 +1,4 @@
-import fakeLayout from 'layouts/fake-layout'
-
+import fakeLayout from 'layouts/fake-layout.vue'
 export const constant = [
   {
     path: '',
@@ -17,25 +16,25 @@ export const constant = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('pages/dashboard')
+    component: () => import('pages/dashboard/index.vue')
     // children: [
     // {
     //   path: '',
     //   name: 'dashboard',
     //   meta: { title: 'dashboard', icon: 'dashboard', constant: true },
-    //   component: () => import('pages/dashboard')
+    //   component: () => import('pages/dashboard/index.vue')
     // }
     // ]
   },
   {
     path: '/home',
-    component: () => import('pages/dashboard')
+    component: () => import('pages/dashboard/index.vue')
     // children: [
     // {
     //   path: '',
     //   name: 'dashboard',
     //   meta: { title: 'dashboard', icon: 'dashboard', constant: true },
-    //   component: () => import('pages/dashboard')
+    //   component: () => import('pages/dashboard/index.vue')
     // }
     // ]
   },
@@ -48,26 +47,26 @@ export const constant = [
       hidden: true,
       constant: true
     },
-    component: () => import('pages/profile'),
+    component: () => import('pages/profile/index.vue'),
     // redirect: '/profile/information',
     children: [
       {
         path: 'information',
         name: 'profile-information',
         meta: { title: 'information', icon: 'assignment', hidden: true, constant: true },
-        component: () => import('pages/profile/information')
+        component: () => import('pages/profile/information/index.vue')
       },
       {
         path: 'security',
         name: 'profile-security',
         meta: { title: 'security', icon: 'security', hidden: true, constant: true },
-        component: () => import('pages/profile/security')
+        component: () => import('pages/profile/security/index.vue')
       },
       {
         path: 'setting',
         name: 'profile-setting',
         meta: { title: 'setting', icon: 'settings', hidden: true, constant: true },
-        component: () => import('pages/profile/setting')
+        component: () => import('pages/profile/setting/index.vue')
       }
     ]
   },
@@ -80,16 +79,15 @@ export const constant = [
       hidden: true,
       constant: true
     },
-    component: () => import('pages/notification')
+    component: () => import('pages/notification/index.vue')
   },
   {
     path: '/login',
     name: 'login',
     meta: { title: 'login', icon: 'login', hidden: true, constant: true },
-    component: fakeLayout
+    component: () => import('pages/login/index.vue')
   }
 ]
-
 export const dynamic = [
   // {
   //   path: '/store',
@@ -826,7 +824,7 @@ if (process.env.MODE !== 'ssr') {
     name: '404',
     constant: true,
     meta: { title: 'error404', icon: '404', hidden: true },
-    component: () => import('pages/error/error404')
+    component: () => import('pages/error/error404.vue')
   })
 }
 

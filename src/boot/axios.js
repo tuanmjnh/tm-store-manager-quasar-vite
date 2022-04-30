@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { i18n } from './i18n'
-import store from '@/store'
+import store from '../store'
 import { Notify } from 'quasar'
 // import HttpsProxyAgent from 'https-proxy-agent'
 // import { getToken } from './auth'
