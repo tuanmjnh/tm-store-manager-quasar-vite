@@ -1,27 +1,42 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-mb-md">
-      <q-btn-dropdown outline no-caps color="blue" :label="$t(`report.${typeTotal}`)" class="report-type">
-        <q-list separator>
-          <q-item clickable v-close-popup v-for="e in typesTotal" :key="e" :class="typeTotal===e?'text-blue':''"
-                  @click="onChangeTypeTotal(e)">
-            <q-item-section>
-              <q-item-label>{{$t(`report.${e}`)}}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-btn-dropdown>
+      <!-- <q-space /> -->
+      <div class="col col-sm-6 col-md-4">
+        <q-btn-dropdown outline no-caps color="blue" :label="$t(`report.${typeTotal}`)" class="report-type">
+          <q-list separator>
+            <q-item clickable v-close-popup v-for="e in typesTotal" :key="e" :class="typeTotal===e?'text-blue':''"
+                    @click="onChangeTypeTotal(e)">
+              <q-item-section>
+                <q-item-label>{{$t(`report.${e}`)}}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+      </div>
     </div>
     <div class="row q-col-gutter-md q-mb-md">
-      <div class="col-6">
+      <div class="col-6 col-md-3">
         <div class="list-content">
           <div>{{$t('report.orders')}}</div>
           <div class="text-blue">{{parseInt(results.total.orders).NumberFormat($store.getters.language)}}</div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-6 col-md-3">
         <div class="list-content">
           <div>{{$t('report.revenue')}}</div>
+          <div class="text-red">{{parseInt(results.total.prices).NumberFormat($store.getters.language)}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="list-content">
+          <div>{{$t('report.product')}}</div>
+          <div class="text-red">{{parseInt(results.total.prices).NumberFormat($store.getters.language)}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="list-content">
+          <div>{{$t('report.quantity')}}</div>
           <div class="text-red">{{parseInt(results.total.prices).NumberFormat($store.getters.language)}}</div>
         </div>
       </div>

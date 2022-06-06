@@ -128,7 +128,9 @@ export default {
     new: 'New',
     dependent: 'Dependent',
     notification: 'Notification',
-    strong: 'Strong'
+    strong: 'Strong',
+    import: 'Import',
+    export: 'Export',
   },
   success: {
     insert: 'Insert success',
@@ -245,7 +247,9 @@ export default {
     securityStatus: 'Security status',
     loginHistory: 'Login history',
     lastLogin: 'Last login',
-    lastChangePass: 'Last change password'
+    lastChangePass: 'Last change password',
+    client: 'Client',
+    Manager: 'Manager'
   },
   profile: {
     title: 'My profile',
@@ -391,9 +395,11 @@ export default {
     fiveYear: '1st quarter',
     bills: 'Total bill',
     products: 'Total product',
+    product: 'Product',
     prices: 'Total price',
     revenue: 'Revenue',
     quantities: 'Total quantity',
+    quantity: 'Quantity',
     billsImport: 'Total bill import',
     productsImport: 'Total product import',
     pricesImport: 'Total price import',

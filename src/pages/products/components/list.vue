@@ -4,7 +4,7 @@
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('product.select')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('product.select')}}</q-toolbar-title>
       <q-btn icon="done" flat round dense color="blue" :disable="!selected||selected.length<1" @click="onSubmit" />
     </q-toolbar>
     <q-card-section class="q-pt-none">
@@ -105,7 +105,7 @@
               <q-item-section side>
                 <q-btn v-if="!selected.includes(e)" flat round dense icon="input" color="blue" :size="$store.getters.dense.table?'sm':'md'"
                        @click="onSelected(e)">
-                  <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.select')}}</q-tooltip>
+                  <q-tooltip>{{$t('global.select')}}</q-tooltip>
                 </q-btn>
                 <q-checkbox v-else :model-value="true" checked-icon="star" unchecked-icon="star_border" indeterminate-icon="help" />
               </q-item-section>

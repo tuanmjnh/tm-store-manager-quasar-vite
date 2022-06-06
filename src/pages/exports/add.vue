@@ -4,7 +4,7 @@
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('warehouse.export')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('warehouse.export')}}</q-toolbar-title>
       <q-btn v-if="!result&&rows&&rows.length" type="submit" flat dense color="blue" icon="backup" :loading="isLoading"
              @click.prevent="onSubmit" />
       <q-btn v-if="rows&&rows.length" type="submit" flat dense color="blue-grey-4" icon="restart_alt" :loading="isLoading"
@@ -26,16 +26,16 @@
               <div class="col-xs-12 col-sm-auto self-center text-right">
                 <div class="col-auto self-center">
                   <q-btn v-if="selected&&selected.length" flat round dense color="negative" icon="delete" @click="onRemove()">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.delete')}}</q-tooltip>
+                    <q-tooltip>{{$t('global.delete')}}</q-tooltip>
                   </q-btn>
                   <q-btn v-if="selected&&selected.length" flat round dense color="blue" icon="paid" @click="onToPriceSale()">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.priceSale')}}</q-tooltip>
+                    <q-tooltip>{{$t('product.priceSale')}}</q-tooltip>
                   </q-btn>
                   <q-btn v-if="selected&&selected.length" flat round dense color="teal" icon="attach_money" @click="onToPriceExport()">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.priceExport')}}</q-tooltip>
+                    <q-tooltip>{{$t('product.priceExport')}}</q-tooltip>
                   </q-btn>
                   <!-- <q-btn v-if="result" flat round dense color="indigo" icon="print" @click="onPrint">
-                  <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.print')}}</q-tooltip>
+                  <q-tooltip >{{$t('product.print')}}</q-tooltip>
                 </q-btn> -->
                   <q-btn-dropdown v-if="result" flat round dense color="indigo" icon="print">
                     <q-list :dense="$store.getters.dense.form">
@@ -69,16 +69,16 @@
                     </q-list>
                   </q-btn-dropdown>
                   <q-btn flat round dense color="blue" icon="qr_code_scanner" @click="isDialogQRCode=!isDialogQRCode">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('qrCode.qrCodeScanner')}}</q-tooltip>
+                    <q-tooltip>{{$t('qrCode.qrCodeScanner')}}</q-tooltip>
                   </q-btn>
                   <q-btn v-if="!result" flat round dense color="purple" icon="find_in_page" @click="onOpenProductList">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.select')}}</q-tooltip>
+                    <q-tooltip>{{$t('product.select')}}</q-tooltip>
                   </q-btn>
                   <q-btn v-if="!result" flat round dense color="indigo" icon="cloud_upload" @click="onOpenProductLoad">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('files.openFile') }}</q-tooltip>
+                    <q-tooltip>{{$t('files.openFile') }}</q-tooltip>
                   </q-btn>
                   <q-btn flat round dense :color="$store.state.app.darkMode?'':'grey-7'" icon="menu_open">
-                    <q-tooltip v-if="!$q.platform.is.mobile">{{$t('table.displayColumns')}}
+                    <q-tooltip>{{$t('table.displayColumns')}}
                     </q-tooltip>
                     <q-menu fit>
                       <q-list dense style="min-width:120px">
@@ -93,7 +93,7 @@
                   </q-btn>
                   <q-btn flat round dense :color="$store.state.app.darkMode?'':'grey-7'" :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
                          @click="props.toggleFullscreen">
-                    <q-tooltip v-if="!$q.platform.is.mobile">
+                    <q-tooltip>
                       {{props.inFullscreen?$t('global.normalScreen'):$t('global.fullScreen')}}
                     </q-tooltip>
                   </q-btn>
@@ -189,7 +189,7 @@
               </q-td>
               <q-td auto-width class="text-center">
                 <q-btn flat round dense icon="close" color="red" :size="$store.getters.dense.table?'sm':'md'" @click="onRemove(props.row)">
-                  <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.cancel')}}</q-tooltip>
+                  <q-tooltip>{{$t('global.cancel')}}</q-tooltip>
                 </q-btn>
               </q-td>
             </q-tr>
@@ -209,7 +209,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup />
         </div>
-        <q-toolbar-title class="text-subtitle1">{{$t('files.dataFile')}}</q-toolbar-title>
+        <q-toolbar-title>{{$t('files.dataFile')}}</q-toolbar-title>
         <q-btn v-if="loadedRows&&loadedRows.length" flat type="submit" :dense="$store.getters.dense.button" color="blue"
                icon="offline_pin" :disable="isLoading" @click.prevent="onLoadedFile">
           <q-tooltip>{{$t('global.accept')}}</q-tooltip>

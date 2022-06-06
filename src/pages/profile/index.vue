@@ -42,7 +42,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup />
         </div>
-        <q-toolbar-title class="text-subtitle1">{{$t('users.information')}}</q-toolbar-title>
+        <q-toolbar-title>{{$t('users.information')}}</q-toolbar-title>
         <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
         <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
       </q-toolbar>
@@ -60,7 +60,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup />
         </div>
-        <q-toolbar-title class="text-subtitle1">{{$t('route.security')}}</q-toolbar-title>
+        <q-toolbar-title>{{$t('route.security')}}</q-toolbar-title>
         <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
         <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
       </q-toolbar>
@@ -78,7 +78,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup />
         </div>
-        <q-toolbar-title class="text-subtitle1">{{$t('route.setting')}}</q-toolbar-title>
+        <q-toolbar-title>{{$t('route.setting')}}</q-toolbar-title>
         <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
         <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
       </q-toolbar>

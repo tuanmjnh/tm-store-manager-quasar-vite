@@ -23,7 +23,16 @@ export default defineComponent({
         else tabsHiden[i].classList.add('hidden')
       }
     }
-    onMounted(() => { changeTab() })
+    // onBeforeMount(() => {
+    //   const tabPanels = document.getElementsByClassName('q-tab-panel')
+    //   console.log(tabPanels)
+    //   for (let i = 0; i < tabPanels.length; i++) {
+    //     tabPanels[i].classList.add('hidden')
+    //   }
+    // })
+    onMounted(() => {
+      changeTab()
+    })
     watch(() => props.modelValue, (state, prevState) => { changeTab() }, { deep: true, immediate: true })
     return {
       onChangeValue (val) {

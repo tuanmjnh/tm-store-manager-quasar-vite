@@ -55,11 +55,16 @@
     <q-separator />
     <q-card-section class="bg-white">
       <!-- :style="{height:`${height+(displayValue?60:20)}px`}" -->
-      <canvas id="tm-barcode-generator">
+      <div id="tm-barcode-generator" class="q-mb-md">
         <q-popup-edit v-model="modelValueLocal" auto-save v-slot="scope" @update:model-value="onEditBarCode">
           <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
         </q-popup-edit>
-      </canvas>
+      </div>
+      <!-- <canvas id="tm-barcode-generator">
+        <q-popup-edit v-model="modelValueLocal" auto-save v-slot="scope" @update:model-value="onEditBarCode">
+          <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
+        </q-popup-edit>
+      </canvas> -->
       <!-- <div class="text-value text-subtitle2">{{modelValueLocal}}</div> -->
     </q-card-section>
     <q-card-section class="text-caption card-section-bottom">
@@ -73,7 +78,7 @@
 </template>
 
 <script>
-import { defineComponent, defineAsyncComponent, ref, onMounted, watch, nextTick } from 'vue'
+import { defineComponent, defineAsyncComponent, ref, onMounted, watch } from 'vue'
 import JsBarcode from 'jsbarcode'
 export default defineComponent({
   name: 'TM-BarCodeGenerator',
@@ -105,7 +110,12 @@ export default defineComponent({
     const isMounted = ref(false)
     const onInit = (value) => {
       if (value) {
-        const rs = JsBarcode('#tm-barcode-generator', value, {
+        const EL = document.getElementById('tm-barcode-generator')
+        const oldCanvasEL = EL.querySelector('canvas')
+        if (oldCanvasEL) EL.removeChild(oldCanvasEL)
+        const canvasEL = document.createElement('canvas')
+        EL.appendChild(canvasEL)
+        const rs = JsBarcode(canvasEL, value, {
           format: props.format,
           width: props.width,
           height: props.height,
@@ -115,13 +125,14 @@ export default defineComponent({
       }
     }
     watch(() => props.modelValue, (state, prevState) => {
-      modelValueLocal.value = state
-      if (isMounted.value) onInit(state)
+      if (props.modelValue) {
+        modelValueLocal.value = state
+        if (isMounted.value) onInit(state)
+      }
     }, { deep: true, immediate: true })
-
     onMounted(() => {
       isMounted.value = true
-      onInit(props.modelValue)
+      if (props.modelValue) onInit(props.modelValue)
     })
     return {
       modelValueLocal, isDialog,

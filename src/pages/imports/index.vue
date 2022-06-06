@@ -4,10 +4,10 @@
       <div v-if="$route.path!=='/warehouse/import/list'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.import')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('route.import')}}</q-toolbar-title>
       <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" @click="isDialogAdd=!isDialogAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <!-- <div class="q-pa-md"> -->
           <div class="row">
@@ -62,7 +62,7 @@
                 </q-list>
               </q-btn-dropdown>
               <q-btn flat round dense icon="info" color="light-green" :size="$store.getters.dense.table?'sm':'md'" @click="onDetails(e)">
-                <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.details')}}</q-tooltip>
+                <q-tooltip>{{$t('global.details')}}</q-tooltip>
               </q-btn>
             </template>
             <template v-slot:left>
@@ -133,7 +133,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup></q-btn>
         </div>
-        <span class="text-subtitle1">{{$t('product.importBallotDetails')}}</span>
+        <span>{{$t('product.importBallotDetails')}}</span>
       </q-toolbar>
       <q-separator />
       <!-- <q-scroll-area style="height:calc(100vh - 180px)"> -->

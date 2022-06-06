@@ -1,6 +1,6 @@
 // app global css in SCSS form
 @import "flag.css";
-//
+// light mode
 .body--light {
   .q-header {
     background-color: #1976d2; //2196f3
@@ -14,13 +14,24 @@
   //   background-color: #e7e7e7;
   // }
 }
-//
+// dark mode
 .body--dark {
   .q-header,
   .q-footer {
     background-color: #121212;
     color: #fff;
   }
+}
+// font-size
+.q-toolbar__title {
+  font-size: 18px;
+}
+// Table
+.q-table__card {
+  color: inherit;
+}
+.q-table__card--dark {
+  color: #fff;
 }
 //
 .headder-row {
@@ -81,5 +92,33 @@
         }
       }
     }
+  }
+}
+
+// card scroll content
+.card-scroll__content {
+  height: calc(100vh - 101px);
+}
+.card-scroll__content2 {
+  height: calc(100vh - 125px);
+}
+.card-scroll__content-add {
+  height: calc(100vh - 135px);
+}
+.card-scroll__content-add-tab {
+  height: calc(100vh - 140px);
+}
+body.mobile {
+  .card-scroll__content {
+    height: calc(100vh - 150px);
+  }
+  .card-scroll__content2 {
+    height: calc(100vh - 160px);
+  }
+  .card-scroll__content-add {
+    height: calc(100vh - 83px);
+  }
+  .card-scroll__content-add-tab {
+    height: calc(100vh - 90px);
   }
 }

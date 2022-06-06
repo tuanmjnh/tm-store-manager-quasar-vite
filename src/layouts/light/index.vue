@@ -18,10 +18,10 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawer" show-if-above>
+    <q-drawer v-model="leftDrawer" show-if-above bordered>
       <q-scroll-area class="fit">
         <q-list>
-          <drawer-profile @on-show="leftDrawer=!leftDrawer" />
+          <drawer-profile @on-show="$q.platform.is.mobile?leftDrawer=!leftDrawer:''" />
           <q-separator spaced />
           <drawer-item v-for="(e,i) in $store.getters.routes" :key="i" :dense="$store.getters.dense.menu" :item="e" is-icon
                        :active="onActive(e.name)" />
@@ -39,10 +39,10 @@
 
 
     <q-footer bordered>
-      <menu-bottom></menu-bottom>
+      <menu-bottom v-if="$q.platform.is.mobile"></menu-bottom>
     </q-footer>
 
-    <q-page-container>
+    <q-page-container id="page-container">
       <!-- <q-scroll-area style="height:calc(100vh - 99px)"> -->
       <router-view />
       <!-- </q-scroll-area> -->
@@ -62,7 +62,7 @@ export default defineComponent({
     headerNotification: defineAsyncComponent(() => import('../components/header-notification.vue')),
     drawerProfile: defineAsyncComponent(() => import('../components/drawer-profile.vue')),
     drawerItem: defineAsyncComponent(() => import('../components/drawer-item.vue')),
-    menuBottom: defineAsyncComponent(() => import('../components/menu-bottom.vue'))
+    menuBottom: defineAsyncComponent(() => import('../components/menu-bottom.vue')),
   },
   setup () {
     const $route = useRoute()

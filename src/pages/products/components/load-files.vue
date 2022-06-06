@@ -4,10 +4,10 @@
       <q-avatar :icon="$route.meta.icon" size="50px" />
       <q-toolbar-title>{{$t('files.dataFile')}}</q-toolbar-title>
       <q-btn v-if="items&&items.length" flat round dense color="primary" icon="done" :disable="isLoading" @click="onFinish">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.accept')}}</q-tooltip>
+        <q-tooltip>{{$t('global.accept')}}</q-tooltip>
       </q-btn>
       <q-btn v-if="items&&items.length" flat round dense :disable="isLoading" :color="$store.state.app.darkMode?'':'grey-7'" icon="menu_open">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('table.displayColumns')}}</q-tooltip>
+        <q-tooltip>{{$t('table.displayColumns')}}</q-tooltip>
         <q-menu fit>
           <q-list dense style="min-width:100px">
             <template v-for="(item,index) in columns">
@@ -21,11 +21,11 @@
       </q-btn>
       <q-btn v-if="items&&items.length" flat round dense :color="$store.state.app.darkMode?'':'grey-7'"
              :icon="maximized?'fullscreen_exit':'fullscreen'" :disable="isLoading" @click="$emit('update:maximized',!maximized)">
-        <q-tooltip v-if="!$q.platform.is.mobile">
+        <q-tooltip>
           {{maximized?$t('global.normalScreen'):$t('global.fullScreen')}}</q-tooltip>
       </q-btn>
       <q-btn flat round dense icon="close" v-close-popup>
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.cancel')}}</q-tooltip>
+        <q-tooltip>{{$t('global.cancel')}}</q-tooltip>
       </q-btn>
     </q-toolbar>
     <q-separator />
@@ -95,11 +95,11 @@
           <q-td auto-width key="status" :props="props">
             <i v-if="props.row.status" class="material-icons text-green">
               cloud_done
-              <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.statusIn')}}</q-tooltip>
+              <q-tooltip>{{$t('product.statusIn')}}</q-tooltip>
             </i>
             <i v-else class="material-icons text-orange">
               cloud_off
-              <q-tooltip v-if="!$q.platform.is.mobile">{{$t('product.statusOut')}}</q-tooltip>
+              <q-tooltip>{{$t('product.statusOut')}}</q-tooltip>
             </i>
           </q-td>
         </q-tr>

@@ -4,10 +4,10 @@
       <div v-if="$route.path!=='/warehouse/data'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.product')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('route.product')}}</q-toolbar-title>
       <q-btn icon="add" flat round dense color="blue" @click="onAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <!-- <div class="q-pa-md"> -->
           <div class="row">

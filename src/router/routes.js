@@ -16,6 +16,7 @@ export const constant = [
   {
     path: '/dashboard',
     name: 'dashboard',
+    meta: { title: 'dashboard', icon: 'dashboard' },
     component: () => import('pages/dashboard/index.vue')
     // children: [
     // {
@@ -100,8 +101,8 @@ export const dynamic = [
   //     {
   //       path: 'warehouse',
   //       name: 'store-warehouse',
-  //       meta: { title: 'data', icon: 'home_work', parent: 'store', component: 'pages/store/index' },
-  //       component: () => import('pages/store/index')
+  //       meta: { title: 'data', icon: 'home_work', parent: 'store', component: 'pages/store/index.vue' },
+  //       component: () => import('pages/store/index.vue')
   //     },
   //     {
   //       path: 'report',
@@ -141,25 +142,25 @@ export const dynamic = [
     meta: { title: 'warehouse', icon: 'store' },
     component: fakeLayout,
     redirect: '/warehouse/data',
-    // component: () => import('pages/warehouse/index'),
+    // component: () => import('pages/warehouse/index.vue'),
     children: [
       {
         path: 'data',
         name: 'warehouse-data',
-        meta: { title: 'data', icon: 'home_work', hidden: true, parent: 'warehouse', component: 'pages/warehouse/index' },
-        component: () => import('pages/warehouse/index')
+        meta: { title: 'data', icon: 'home_work', hidden: true, parent: 'warehouse', component: 'pages/warehouse/index.vue' },
+        component: () => import('pages/warehouse/index.vue')
       },
       {
         path: 'report',
         name: 'warehouse-report',
-        meta: { title: 'report', icon: 'pie_chart', hidden: true, parent: 'warehouse', component: 'pages/reports/index' },
-        component: () => import('pages/reports/index')
+        meta: { title: 'report', icon: 'pie_chart', hidden: true, parent: 'warehouse', component: 'pages/reports/index.vue' },
+        component: () => import('pages/reports/index.vue')
       },
       {
         path: 'import',
         name: 'import',
-        meta: { title: 'import', icon: 'playlist_add_check', dialog: true, parent: 'warehouse', component: 'pages/imports/index' },
-        // component: () => import('pages/import/index'),
+        meta: { title: 'import', icon: 'playlist_add_check', dialog: true, parent: 'warehouse', component: 'pages/imports/index.vue' },
+        // component: () => import('pages/import/index.vue'),
         component: fakeLayout,
         redirect: '/warehouse/import/list',
         children: [
@@ -167,27 +168,27 @@ export const dynamic = [
             path: 'list',
             name: 'import-list',
             meta: { title: 'list', icon: 'playlist_add_check', hidden: true, noCache: true, flag: 1, parent: 'import' },
-            component: () => import('pages/imports/index')
+            component: () => import('pages/imports/index.vue')
           },
           {
             path: 'add',
             name: 'import-add',
             meta: { title: 'add', icon: 'addchart', hidden: true, parent: 'import' },
-            component: () => import('pages/imports/add')
+            component: () => import('pages/imports/add.vue')
           },
           {
             path: 'edit',
             name: 'import-edit',
             meta: { title: 'edit', icon: 'edit', hidden: true, parent: 'import' },
-            component: () => import('pages/imports/add')
+            component: () => import('pages/imports/add.vue')
           }
         ]
       },
       {
         path: 'export',
         name: 'export',
-        meta: { title: 'export', icon: 'playlist_play', dialog: true, parent: 'warehouse', component: 'pages/exports/index' },
-        // component: () => import('pages/store/export-list')
+        meta: { title: 'export', icon: 'playlist_play', dialog: true, parent: 'warehouse', component: 'pages/exports/index.vue' },
+        // component: () => import('pages/store/export-list.vue')
         component: fakeLayout,
         redirect: '/warehouse/export/list',
         children: [
@@ -195,19 +196,19 @@ export const dynamic = [
             path: 'list',
             name: 'export-list',
             meta: { title: 'list', icon: 'playlist_play', hidden: true, noCache: true, flag: 1, parent: 'export' },
-            component: () => import('pages/exports/index')
+            component: () => import('pages/exports/index.vue')
           },
           {
             path: 'add',
             name: 'export-add',
             meta: { title: 'add', icon: 'double_arrow', hidden: true, parent: 'export' },
-            component: () => import('pages/exports/add')
+            component: () => import('pages/exports/add.vue')
           },
           {
             path: 'edit',
             name: 'export-edit',
             meta: { title: 'edit', icon: 'edit', hidden: true, parent: 'import' },
-            component: () => import('pages/exports/add')
+            component: () => import('pages/exports/add.vue')
           }
         ]
       }
@@ -223,10 +224,10 @@ export const dynamic = [
       {
         path: 'list',
         name: 'product-list',
-        meta: { title: 'list', icon: 'collections', color: "", dialog: true, parent: 'product', component: 'pages/products/index' },
+        meta: { title: 'list', icon: 'collections', color: "", dialog: true, parent: 'product', component: 'pages/products/index.vue' },
         component: fakeLayout,
         redirect: '/product/list/view',
-        // component: () => import('pages/products/index'),
+        // component: () => import('pages/products/index.vue'),
         children: [
           {
             path: 'view',
@@ -239,7 +240,7 @@ export const dynamic = [
               flag: 1,
               parent: 'product-list'
             },
-            component: () => import('pages/products/index')
+            component: () => import('pages/products/index.vue')
           },
           {
             path: 'add',
@@ -250,7 +251,7 @@ export const dynamic = [
               hidden: true,
               parent: 'product-list'
             },
-            component: () => import('pages/products/add')
+            component: () => import('pages/products/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -263,7 +264,7 @@ export const dynamic = [
               activeMenu: '/product-list/view',
               parent: 'product-list'
             },
-            component: () => import('pages/products/add')
+            component: () => import('pages/products/add.vue')
           },
           {
             path: 'trash',
@@ -276,14 +277,14 @@ export const dynamic = [
               flag: 0,
               parent: 'product-list'
             },
-            component: () => import('pages/products/index')
+            component: () => import('pages/products/index.vue')
           }
         ]
       },
       {
         path: 'category',
         name: 'category-product',
-        meta: { title: 'category', icon: 'category', type: 'product', dialog: true, parent: 'product', component: 'pages/category/index' },
+        meta: { title: 'category', icon: 'category', type: 'product', dialog: true, parent: 'product', component: 'pages/category/index.vue' },
         component: fakeLayout,
         redirect: '/product/category/view',
         children: [
@@ -299,7 +300,7 @@ export const dynamic = [
               flag: 1,
               parent: 'category-product'
             },
-            component: () => import('pages/category/index')
+            component: () => import('pages/category/index.vue')
           },
           {
             path: 'add',
@@ -311,7 +312,7 @@ export const dynamic = [
               hidden: true,
               parent: 'category-product'
             },
-            component: () => import('pages/category/add')
+            component: () => import('pages/category/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -325,7 +326,7 @@ export const dynamic = [
               activeMenu: '/category-product/view',
               parent: 'category-product'
             },
-            component: () => import('pages/category/add')
+            component: () => import('pages/category/add.vue')
           },
           {
             path: 'trash',
@@ -339,7 +340,7 @@ export const dynamic = [
               flag: 0,
               parent: 'category-product'
             },
-            component: () => import('pages/category/index')
+            component: () => import('pages/category/index.vue')
           }
         ]
       }
@@ -348,10 +349,10 @@ export const dynamic = [
   {
     path: '/orders',
     name: 'orders',
-    meta: { title: 'orders', icon: 'class', hidden: true, component: 'pages/orders/index' },
+    meta: { title: 'orders', icon: 'class', hidden: true, component: 'pages/orders/index.vue' },
     redirect: '/orders/view',
     component: fakeLayout,
-    // component: () => import('pages/orders/index'),
+    // component: () => import('pages/orders/index.vue'),
     children: [
       {
         path: 'view',
@@ -363,9 +364,9 @@ export const dynamic = [
           noCache: true,
           flag: 1,
           parent: 'orders',
-          component: 'pages/orders/index'
+          component: 'pages/orders/index.vue'
         },
-        component: () => import('pages/orders/index')
+        component: () => import('pages/orders/index.vue')
       },
       {
         path: 'add',
@@ -377,7 +378,7 @@ export const dynamic = [
           parent: 'orders',
           component: 'pages/orders/add'
         },
-        component: () => import('pages/orders/add')
+        component: () => import('pages/orders/add.vue')
       },
       {
         path: 'edit/:id?',
@@ -390,7 +391,7 @@ export const dynamic = [
           activeMenu: '/orders/view',
           parent: 'orders'
         },
-        component: () => import('pages/orders/add')
+        component: () => import('pages/orders/add.vue')
       },
       {
         path: 'trash',
@@ -403,7 +404,7 @@ export const dynamic = [
           flag: 0,
           parent: 'orders'
         },
-        component: () => import('pages/orders/index')
+        component: () => import('pages/orders/index.vue')
       }
     ]
   },
@@ -417,7 +418,7 @@ export const dynamic = [
       {
         path: 'list',
         name: 'news-list',
-        meta: { title: 'list', icon: 'collections_bookmark', dialog: true, parent: 'news', component: 'pages/news/index' },
+        meta: { title: 'list', icon: 'collections_bookmark', dialog: true, parent: 'news', component: 'pages/news/index.vue' },
         component: fakeLayout,
         redirect: '/news/list/view',
         children: [
@@ -432,7 +433,7 @@ export const dynamic = [
               flag: 1,
               parent: 'news-list'
             },
-            component: () => import('pages/news/index')
+            component: () => import('pages/news/index.vue')
           },
           {
             path: 'add',
@@ -443,7 +444,7 @@ export const dynamic = [
               hidden: true,
               parent: 'news-list'
             },
-            component: () => import('pages/news/add')
+            component: () => import('pages/news/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -456,7 +457,7 @@ export const dynamic = [
               activeMenu: '/news-list/view',
               parent: 'news-list'
             },
-            component: () => import('pages/news/add')
+            component: () => import('pages/news/add.vue')
           },
           {
             path: 'trash',
@@ -469,14 +470,14 @@ export const dynamic = [
               flag: 0,
               parent: 'news-list'
             },
-            component: () => import('pages/news/index')
+            component: () => import('pages/news/index.vue')
           }
         ]
       },
       {
         path: 'category',
         name: 'category-news',
-        meta: { title: 'category', icon: 'category', type: 'news', dialog: true, parent: 'news', component: 'pages/category/index' },
+        meta: { title: 'category', icon: 'category', type: 'news', dialog: true, parent: 'news', component: 'pages/category/index.vue' },
         component: fakeLayout,
         redirect: '/news/category/view',
         children: [
@@ -492,7 +493,7 @@ export const dynamic = [
               flag: 1,
               parent: 'category-news'
             },
-            component: () => import('pages/category/index')
+            component: () => import('pages/category/index.vue')
           },
           {
             path: 'add',
@@ -504,7 +505,7 @@ export const dynamic = [
               hidden: true,
               parent: 'category-news'
             },
-            component: () => import('pages/category/add')
+            component: () => import('pages/category/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -518,7 +519,7 @@ export const dynamic = [
               activeMenu: '/category-news/view',
               parent: 'category-news'
             },
-            component: () => import('pages/category/add')
+            component: () => import('pages/category/add.vue')
           },
           {
             path: 'trash',
@@ -532,7 +533,7 @@ export const dynamic = [
               flag: 0,
               parent: 'category-news'
             },
-            component: () => import('pages/category/index')
+            component: () => import('pages/category/index.vue')
           }
         ]
       }
@@ -548,7 +549,7 @@ export const dynamic = [
       {
         path: 'users',
         name: 'manager-users',
-        meta: { title: 'users', icon: 'account_box', dialog: true, parent: 'manager', component: 'pages/users/index' },
+        meta: { title: 'users', icon: 'account_box', dialog: true, parent: 'manager', component: 'pages/users/index.vue' },
         component: fakeLayout,
         redirect: '/manager/users/view',
         children: [
@@ -563,7 +564,7 @@ export const dynamic = [
               flag: 1,
               parent: 'manager-users'
             },
-            component: () => import('pages/users/index')
+            component: () => import('pages/users/index.vue')
           },
           {
             path: 'add',
@@ -574,7 +575,7 @@ export const dynamic = [
               hidden: true,
               parent: 'manager-users'
             },
-            component: () => import('pages/users/add')
+            component: () => import('pages/users/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -587,7 +588,7 @@ export const dynamic = [
               activeMenu: '/users/view',
               parent: 'manager-users'
             },
-            component: () => import('pages/users/add')
+            component: () => import('pages/users/add.vue')
           },
           {
             path: 'trash',
@@ -600,7 +601,7 @@ export const dynamic = [
               flag: 0,
               parent: 'manager-users'
             },
-            component: () => import('pages/users/index')
+            component: () => import('pages/users/index.vue')
           },
           {
             path: 'import',
@@ -613,14 +614,14 @@ export const dynamic = [
               flag: 0,
               parent: 'manager-users'
             },
-            component: () => import('pages/users/import')
+            component: () => import('pages/users/import.vue')
           }
         ]
       },
       {
         path: 'roles',
         name: 'manager-roles',
-        meta: { title: 'roles', icon: 'verified_user', dialog: true, parent: 'manager', component: 'pages/roles/index' },
+        meta: { title: 'roles', icon: 'verified_user', dialog: true, parent: 'manager', component: 'pages/roles/index.vue' },
         component: fakeLayout,
         redirect: '/manager/roles/view',
         children: [
@@ -635,7 +636,7 @@ export const dynamic = [
               flag: 1,
               parent: 'manager-roles'
             },
-            component: () => import('pages/roles/index')
+            component: () => import('pages/roles/index.vue')
           },
           {
             path: 'add',
@@ -646,7 +647,7 @@ export const dynamic = [
               hidden: true,
               parent: 'manager-roles'
             },
-            component: () => import('pages/roles/add')
+            component: () => import('pages/roles/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -659,7 +660,7 @@ export const dynamic = [
               activeMenu: '/roles/view',
               parent: 'manager-roles'
             },
-            component: () => import('pages/roles/add')
+            component: () => import('pages/roles/add.vue')
           },
           {
             path: 'trash',
@@ -672,14 +673,14 @@ export const dynamic = [
               flag: 0,
               parent: 'manager-roles'
             },
-            component: () => import('pages/roles/index')
+            component: () => import('pages/roles/index.vue')
           }
         ]
       },
       {
         path: 'types',
         name: 'manager-types',
-        meta: { title: 'types', icon: 'scatter_plot', dialog: true, parent: 'manager', component: 'pages/types/index' },
+        meta: { title: 'types', icon: 'scatter_plot', dialog: true, parent: 'manager', component: 'pages/types/index.vue' },
         component: fakeLayout,
         redirect: '/manager/types/view',
         children: [
@@ -694,7 +695,7 @@ export const dynamic = [
               flag: 1,
               parent: 'manager-types'
             },
-            component: () => import('pages/types/index')
+            component: () => import('pages/types/index.vue')
           },
           {
             path: 'add',
@@ -705,7 +706,7 @@ export const dynamic = [
               hidden: true,
               parent: 'manager-types'
             },
-            component: () => import('pages/types/add')
+            component: () => import('pages/types/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -719,7 +720,7 @@ export const dynamic = [
               activeMenu: '/types/view',
               parent: 'manager-types'
             },
-            component: () => import('pages/types/add')
+            component: () => import('pages/types/add.vue')
             // beforeEnter: (to, from, next) => {
             //   if (to.redirectedFrom) {
             //     to.query = to.redirectedFrom.query
@@ -740,14 +741,14 @@ export const dynamic = [
               flag: 0,
               parent: 'manager-types'
             },
-            component: () => import('pages/types/index')
+            component: () => import('pages/types/index.vue')
           }
         ]
       },
       {
         path: 'configs',
         name: 'manager-configs',
-        meta: { title: 'configs', icon: 'settings', dialog: true, parent: 'manager', component: 'pages/configs/index' },
+        meta: { title: 'configs', icon: 'settings', dialog: true, parent: 'manager', component: 'pages/configs/index.vue' },
         component: fakeLayout,
         redirect: '/manager/configs/view',
         children: [
@@ -762,7 +763,7 @@ export const dynamic = [
               flag: 1,
               parent: 'manager-configs'
             },
-            component: () => import('pages/configs/index')
+            component: () => import('pages/configs/index.vue')
           },
           {
             path: 'add',
@@ -773,7 +774,7 @@ export const dynamic = [
               hidden: true,
               parent: 'manager-configs'
             },
-            component: () => import('pages/configs/add')
+            component: () => import('pages/configs/add.vue')
           },
           {
             path: 'edit/:id?',
@@ -787,7 +788,7 @@ export const dynamic = [
               activeMenu: '/configs/view',
               parent: 'manager-configs'
             },
-            component: () => import('pages/configs/add')
+            component: () => import('pages/configs/add.vue')
             // beforeEnter: (to, from, next) => {
             //   if (to.redirectedFrom) {
             //     to.query = to.redirectedFrom.query
@@ -808,7 +809,7 @@ export const dynamic = [
               flag: 0,
               parent: 'manager-configs'
             },
-            component: () => import('pages/configs/index')
+            component: () => import('pages/configs/index.vue')
           }
         ]
       }

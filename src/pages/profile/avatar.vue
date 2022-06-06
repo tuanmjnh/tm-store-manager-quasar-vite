@@ -23,7 +23,7 @@
                         :url="$store.state.app.apiUpload" @onAccept="onAccept" :multiple="false" mimeType="image" :headers="headersData">
           <template v-slot:headerLeft>
             <q-btn flat dense icon="arrow_back" v-close-popup />
-            <span class="text-subtitle1">{{$t('files.manager')}}</span>
+            <span>{{$t('files.manager')}}</span>
           </template>
         </tm-fileManager>
       </q-card-section>
@@ -38,7 +38,7 @@
                    accept=".jpg,.jpeg,.png,.gif,.jfif" :upload-url="$store.state.app.apiUpload" @on-finish="onUploaded" :headers="headersData">
           <template v-slot:headerLeft>
             <q-btn flat dense icon="arrow_back" v-close-popup />
-            <span class="text-subtitle1">{{$t('files.upload')}}</span>
+            <span>{{$t('files.upload')}}</span>
           </template>
         </tm-upload>
       </q-card-section>
@@ -55,7 +55,7 @@
               <div class="col-auto">
                 <q-btn flat dense icon="arrow_back" color="blue" v-close-popup />
               </div>
-              <q-toolbar-title class="text-subtitle1">
+              <q-toolbar-title>
               </q-toolbar-title>
             </q-toolbar>
           </template>

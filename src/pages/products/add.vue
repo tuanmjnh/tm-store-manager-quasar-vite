@@ -1,14 +1,36 @@
 <template>
-  <q-card>
-    <q-toolbar>
+  <q-card flat style="min-width:60%">
+    <q-toolbar v-if="$q.platform.is.mobile">
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">
+      <q-toolbar-title>
         {{data._id?`${$t('route.edit')} ${$t("route.product").toLowerCase()}`:`${$t('route.add')} ${$t("route.product").toLowerCase()}`}}
       </q-toolbar-title>
       <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
       <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
+    </q-toolbar>
+    <q-toolbar v-else>
+      <q-toolbar-title>
+        {{data._id?`${$t('route.edit')} ${$t("route.product").toLowerCase()}`:`${$t('route.add')} ${$t("route.product").toLowerCase()}`}}
+      </q-toolbar-title>
+      <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)">
+        <q-tooltip>{{data._id?$t('global.update'):$t('global.add')}}</q-tooltip>
+      </q-btn>
+      <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)">
+        <q-tooltip>{{$t('global.drafts')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-if="dialog" flat round dense :disable="$store.state.app.loading.post||$store.state.app.loading.put"
+             :icon="maximized?'fullscreen_exit':'fullscreen'" @click="$emit('update:maximized',!maximized)">
+        <q-tooltip>{{maximized?$t('global.normalScreen'):$t('global.fullScreen')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-if="dialog" flat round dense icon="close" :disable="$store.state.app.loading.post||$store.state.app.loading.put" v-close-popup>
+        <q-tooltip>{{$t('global.cancel')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-else flat round dense icon="reply" :disable="$store.state.app.loading.post||$store.state.app.loading.put"
+             @click="$router.push('view')">
+        <q-tooltip>{{$t('global.back')}}</q-tooltip>
+      </q-btn>
     </q-toolbar>
     <q-separator />
     <q-card-section class="q-pa-none">
@@ -20,8 +42,7 @@
           <q-tab name="qrcode" :label="$t('qrCode.qrCode')" />
         </tm-tabs>
         <q-separator />
-        <!-- <q-scroll-area style="height:calc(100vh - 99px)"> -->
-        <q-tab-panel name="inf" id="tab-inf" class="scroll" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="inf" id="tab-inf" class="scroll card-scroll__content-add-tab">
           <div class="row q-gutter-xs">
             <div class="col-12">
               <select-category v-model="selectedCategory" v-model:parents="selectedCategories" :categories="categories" option-value="_id"
@@ -118,7 +139,7 @@
             </div>
           </div>
         </q-tab-panel>
-        <q-tab-panel name="images" id="tab-images" class="q-pt-none q-pb-none" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="images" id="tab-images" class="scroll card-scroll__content-add-tab q-pt-none q-pb-none hidden">
           <tm-fileList ref="refTMFileList" v-model="data.images" v-model:selected="selectedFileList" v-model:view-type="viewType"
                        :multiple="true" :size="113" minHeight="660px" :lblConfirmTitle="$t('messageBox.warning')"
                        :lblConfirmContent="$t('messageBox.delete')" :lblOk="$t('global.accept')" :lblCancel="$t('global.cancel')">
@@ -134,16 +155,16 @@
               <q-separator vertical class="q-ml-sm q-mr-sm" />
               <q-btn dense flat icon="view_module" :color="viewType==='box'?'indigo':'blue-grey'"
                      @click="$refs.refTMFileList.onChangeView('box')">
-                <q-tooltip v-if="!$q.platform.is.mobile">{{labelViewBox}}</q-tooltip>
+                <q-tooltip>{{labelViewBox}}</q-tooltip>
               </q-btn>
               <q-btn dense flat icon="view_list" :color="viewType==='list'?'indigo':'blue-grey'"
                      @click="$refs.refTMFileList.onChangeView('list')">
-                <q-tooltip v-if="!$q.platform.is.mobile">{{labelViewList}}</q-tooltip>
+                <q-tooltip>{{labelViewList}}</q-tooltip>
               </q-btn>
             </template>
           </tm-fileList>
         </q-tab-panel>
-        <q-tab-panel name="attributes" id="tab-attributes" class="scroll" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="attributes" id="tab-attributes" class="scroll card-scroll__content-add-tab hidden">
           <div class="row q-gutter-md">
             <div class="col-12">{{$t('global.pin')}}:</div>
             <div class="col-12">
@@ -164,10 +185,10 @@
                          :labelNoData="$t('table.noData')" :hintKey="$t('hint.newValue')" :hintVal="$t('hint.newValue')"
                          :on-filter-key="onFilterAttrKey" :on-filter-value="onFilterAttrValue" />
         </q-tab-panel>
-        <q-tab-panel name="qrcode" id="tab-qrcode" class="scroll" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="qrcode" id="tab-qrcode" class="scroll card-scroll__content-add-tab hidden">
           <div class="row q-gutter-xs q-mb-lg">
             <div class="col-12 col-md-5">
-              <tm-qrcodegenerator v-model="data.qrcode" :defaultValue="$store.state.products.item._id"
+              <tm-qrcodegenerator v-model="data.qrcode" :defaultValue="$store.state.products.item._id" :width="130" :height="130"
                                   :title="$t('qrCode.qrCode')" :labelDefault="$t('qrCode.qrCodeDefault')"
                                   :labelScanner="$t('qrCode.qrCodeScanner')" :labelEdit="$t('qrCode.qrCodeEdit')"
                                   :labelHelper="$t('qrCode.qrCodeEditHelp')" />
@@ -196,7 +217,7 @@
                         :headers="[{name:'Upload-Path',value:'products'},{ name:'Upload-Rename',value:true},{name:'x-access-token',value:`Bearer ${$store.state.auth.token}`}]">
           <template v-slot:headerLeft>
             <q-btn flat dense icon="arrow_back" v-close-popup />
-            <span class="text-subtitle1">{{$t('files.manager')}}</span>
+            <span>{{$t('files.manager')}}</span>
           </template>
         </tm-fileManager>
       </q-card-section>
@@ -212,7 +233,7 @@
                    :headers="[{name:'Upload-Path',value:'products'},{ name:'Upload-Rename',value:true},{name:'x-access-token',value:`Bearer ${$store.state.auth.token}`}]">
           <template v-slot:headerLeft>
             <q-btn flat dense icon="arrow_back" v-close-popup />
-            <span class="text-subtitle1">{{$t('files.upload')}}</span>
+            <span>{{$t('files.upload')}}</span>
           </template>
         </tm-upload>
       </q-card-section>
@@ -239,6 +260,10 @@ export default defineComponent({
     selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue')),
     tmQrcodegenerator: defineAsyncComponent(() => import('components/tm-qrcode-generator/index.vue')),
     tmBarcodegenerator: defineAsyncComponent(() => import('components/tm-barcode-generator/index.vue'))
+  },
+  props: {
+    dialog: { type: Boolean, default: false },
+    maximized: { type: Boolean, default: false }
   },
   emits: ['onFinish'],
   setup (props, { emit }) {
@@ -347,18 +372,6 @@ export default defineComponent({
       onSetRandomCode () {
         data.value.barcode = getRndInteger(1234567890123, 9999999999999).toString()
       },
-      // onUploaded (val) {
-      //   isDialogUpload.value = false
-      //   if (val)
-      //     if (data.value.images) {
-      //       val.forEach(e => {
-      //         if (data.value.images.findIndex(x => x === e.url) < 0)
-      //           data.value.images.push(e.url)
-      //       })
-      //     } else {
-      //       data.value.images = val.map(x => x.url)
-      //     }
-      // },
       onUploaded (val) {
         isDialogUpload.value = false
         if (val)

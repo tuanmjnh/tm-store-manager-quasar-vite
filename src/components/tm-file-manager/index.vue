@@ -54,7 +54,7 @@ import axios from 'axios'
 export default defineComponent({
   name: "TMFileManager",
   components: {
-    tmFileList: defineAsyncComponent(() => import('@/components/tm-file-list'))
+    tmFileList: defineAsyncComponent(() => import('components/tm-file-list/index.vue'))
   },
   props: {
     accept: { type: String, default: '*' },

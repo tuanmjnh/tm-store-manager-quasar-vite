@@ -5,6 +5,7 @@ const collection = '/auth'
 
 const state = {
   verified: false,
+  loading: false,
   token: Cookies.get('token') || undefined,
   user: undefined,
   roles: [],
@@ -14,6 +15,9 @@ const state = {
 const mutations = {
   SET_VERIFIED (state, value) {
     state.verified = value
+  },
+  SET_LOADING (state, value) {
+    state.loading = value
   },
   SET_TOKEN (state, value) {
     if (value) {
@@ -36,19 +40,27 @@ const mutations = {
 }
 const actions = {
   async login ({ commit }, params) {
-    const rs = await api.post(collection, params)
-    if (rs) {
-      commit('SET_VERIFIED', true)
-      if (rs.token) commit('SET_TOKEN', rs.token)
-      if (rs.user) commit('SET_USER', rs.user)
-      if (rs.user && rs.user.routes) {
-        const routes = await generateRoutes(rs.user.routes)
-        Router.addRoutes(routes, { replace: true })
-        commit('SET_ROUTES', routes)
+    try {
+      commit('SET_LOADING', true)
+      const rs = await api.post(collection, params)
+      if (rs) {
+        commit('SET_VERIFIED', true)
+        if (rs.token) commit('SET_TOKEN', rs.token)
+        if (rs.user) commit('SET_USER', rs.user)
+        if (rs.user && rs.user.routes) {
+          const routes = await generateRoutes(rs.user.routes)
+          Router.addRoutes(routes, { replace: true })
+          commit('SET_ROUTES', routes)
+        }
       }
+    } catch (e) {
+      return null
+    } finally {
+      commit('SET_LOADING', false)
     }
   },
   async verify ({ commit, dispatch, rootState }, params) {
+    commit('SET_LOADING', true)
     let rs
     try {
       if (params) rs = await api.post(collection, params)
@@ -70,6 +82,8 @@ const actions = {
       return rs
     } catch (e) {
       return null
+    } finally {
+      commit('SET_LOADING', false)
     }
   },
   logout ({ commit }) {

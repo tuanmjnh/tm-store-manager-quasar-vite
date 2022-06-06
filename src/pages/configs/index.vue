@@ -1,13 +1,13 @@
 <template>
-  <q-card>
+  <q-card flat>
     <q-toolbar>
-      <div v-if="$route.path!=='/manager/types/view'" class="col-auto">
+      <div v-if="$route.path!=='/manager/configs/view'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.configs')}} </q-toolbar-title>
+      <q-toolbar-title>{{$t('route.configs')}} </q-toolbar-title>
       <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" @click="onAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <!-- <div class="q-pa-md"> -->
           <div class="row">
@@ -20,50 +20,59 @@
               </q-input>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <q-select v-model="pagination.key" :options="$store.state.types.keys" dense options-dense :label="$t('global.types')"
-                        @update:model-value="isFilter=!isFilter">
-                <template v-slot:selected>
-                  <div v-html="`${$t(`types.${pagination.key}`)} - ${pagination.key}`"></div>
-                </template>
-                <template v-slot:option="scope">
-                  <q-item v-bind="scope.itemProps">
-                    <q-item-section>
-                      <q-item-label v-html="`${$t(`types.${scope.opt}`)} - ${scope.opt}`" />
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
-            </div>
-          </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12">
               <q-toggle v-model="pagination.flag" left-label :label="pagination.flag?$t('global.working'):$t('global.trash')"
                         :false-value="0" :true-value="1" @update:model-value="onChangeFlag" />
             </div>
-          </div>
+          </div> -->
         </q-menu>
       </q-btn>
     </q-toolbar>
     <!-- <q-separator /> -->
     <q-card-section class="q-pa-none">
-      <q-scroll-area style="height:calc(100vh - 99px)">
-        <q-list separator>
-          <q-item v-for="(e,i) in rows" :key="i" clickable v-ripple v-touch-swipe.mouse.left="()=>{onTrash(e)}"
-                  v-touch-swipe.mouse.right="()=>{onEdit(e)}" v-touch-hold.mouse="()=>{onTouchHold(e)}">
+      <!-- <q-scroll-area style="height:calc(100vh - 99px)"> -->
+      <q-list separator class="scroll card-scroll__content">
+        <template v-if="$q.platform.is.mobile">
+          <tm-swipeitem v-for="(e,i) in rows" :key="i" leftValue="max" rightValue="111" v-touch-hold.mouse="()=>{onTouchHold(e)}">
+            <template v-if="isRoutes.edit||isRoutes.trash" v-slot:right>
+              <q-btn v-if="isRoutes.edit" no-caps class="q-btn--square" color="blue" @click="onEdit(e)">
+                <q-icon name="edit" size="18px" />
+              </q-btn>
+              <q-btn v-if="isRoutes.trash" no-caps class="q-btn--square" color="negative" @click="onTrash(e)">
+                <q-icon name="clear" size="18px" />
+              </q-btn>
+            </template>
+            <!-- <q-separator v-if="i>0" /> -->
+            <q-item clickable>
+              <q-item-section>
+                <q-item-label>{{e.key}}</q-item-label>
+              </q-item-section>
+              <q-item-section side>{{e.value}}</q-item-section>
+            </q-item>
+          </tm-swipeitem>
+        </template>
+        <template v-else>
+          <q-item clickable v-ripple v-for="(e,i) in rows" :key="i">
             <q-item-section>
               <q-item-label>{{e.key}}</q-item-label>
             </q-item-section>
-            <q-item-section side>{{e.value}}</q-item-section>
+            <q-item-section>{{e.value}}</q-item-section>
+            <q-item-section side>
+              <q-icon name="edit" color="blue" size="18px" @click="onEdit(e)" />
+            </q-item-section>
+            <q-item-section side>
+              <q-icon name="clear" color="negative" size="18px" @click="onTrash(e)" />
+            </q-item-section>
           </q-item>
-        </q-list>
-      </q-scroll-area>
+        </template>
+      </q-list>
+      <!-- </q-scroll-area> -->
     </q-card-section>
   </q-card>
   <!-- Dialog Add -->
-  <q-dialog v-model="isDialogAdd" :maximized="isMaximized">
-    <add-item />
+  <q-dialog v-model="isDialogAdd" :maximized="isMaximized" persistent>
+    <add-item v-model:dialog="isDialogAdd" v-model:maximized="isMaximized" />
   </q-dialog>
   <!-- Dialog Actions -->
   <q-dialog v-model="isDialogTouchHold" position="bottom">
@@ -94,7 +103,7 @@
 </template>
 
 <script>
-import { defineComponent, defineAsyncComponent, ref, computed, onBeforeUnmount } from "vue";
+import { defineComponent, defineAsyncComponent, ref, computed } from "vue";
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
@@ -102,8 +111,8 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "ConfigsIndex",
   components: {
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
     addItem: defineAsyncComponent(() => import('./add.vue')),
-    // tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item'))
   },
   setup () {
     const $router = useRouter()
@@ -181,14 +190,31 @@ export default defineComponent({
         finalize(reset)
       },
       onAdd: () => {
+        if (!isRoutes.value.add) return
         $store.dispatch('configs/set')
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onEdit: (val) => {
         if (!isRoutes.value.edit) return
         if (val) selected.value = [val]
         $store.dispatch('configs/set', selected.value[0]).then(x => selected.value = [])
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onTrash: (val) => {
         if (!isRoutes.value.trash) return

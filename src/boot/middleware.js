@@ -27,6 +27,7 @@ export function onSetGlobalData () {
 
 const whiteList = ['/login'] // no redirect whitelist
 Router.beforeEach(async (to, from, next) => {
+  // console.log(to)
   // start progress bar
   // NProgress.start()
   await onSetGlobalData()
@@ -50,7 +51,8 @@ Router.beforeEach(async (to, from, next) => {
           if (rs) next({ path: to.path, params: to.params, query: to.query })
           else {
             store.dispatch('auth/logout')
-            next()
+            // next()
+            next(`/login?redirect=${to.path}`)
           }
           // if (!data.user) store.dispatch('auth/logout') // || !data.routes.length
           // if (!store.state.userSetting.data) {

@@ -129,6 +129,8 @@ export default {
     dependent: 'Thuộc',
     notification: 'Thông báo',
     strong: 'Mạnh',
+    import: 'Nhập',
+    export: 'Xuất',
   },
   success: {
     insert: 'Thêm mới thành công',
@@ -246,7 +248,9 @@ export default {
     securityStatus: 'Tình trạng bảo mật',
     loginHistory: 'Lịch sử đăng nhập',
     lastLogin: 'Đăng nhập gần nhất',
-    lastChangePass: 'Đổi mật khẩu gần nhất'
+    lastChangePass: 'Đổi mật khẩu gần nhất',
+    client: 'Khách',
+    Manager: 'Quản trị'
   },
   profile: {
     title: 'Hồ sơ của tôi',
@@ -393,9 +397,11 @@ export default {
     fiveYear: 'Báo cáo 5 năm',
     bills: 'Tổng đơn',
     products: 'Tổng mặt hàng',
+    product: 'Mặt hàng',
     prices: 'Tổng tiền',
     revenue: 'Doanh thu',
     quantities: 'Tổng số lượng',
+    quantity: 'Số lượng',
     billsImport: 'Tổng đơn nhập',
     productsImport: 'Tổng sản phẩm nhập',
     pricesImport: 'Tổng tiền nhập',

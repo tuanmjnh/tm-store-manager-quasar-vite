@@ -4,10 +4,9 @@
       <div v-if="$route.path!=='/news/category/view'&&$route.path!=='/product/category/view'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t(`category.title${onGetType()}`)}}</q-toolbar-title>
-      <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" @click="onAdd" />
-      <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+      <q-toolbar-title>{{$t(`category.title${onGetType()}`)}}</q-toolbar-title>
+      <q-btn v-if="$q.platform.is.mobile" icon="search" flat round dense>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <div class="row">
             <div class="col-12">
@@ -21,10 +20,19 @@
           </div>
         </q-menu>
       </q-btn>
+      <q-input v-else v-model="pagination.filter" borderless :dense="$store.getters.dense.input" debounce="500" :placeholder="$t('global.search')">
+        <template v-slot:append>
+          <q-icon v-if="pagination.filter===''" name="search" />
+          <q-icon v-else name="clear" class="cursor-pointer" @click="pagination.filter=''" />
+        </template>
+      </q-input>
+      <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" class="q-ml-md" @click="onAdd">
+        <q-tooltip>{{$t('global.add')}}</q-tooltip>
+      </q-btn>
     </q-toolbar>
-    <q-separator />
+    <!-- <q-separator /> -->
     <q-card-section class="q-pt-sm q-pl-md p-pr-md">
-      <q-scroll-area style="height:calc(100vh - 180px)">
+      <q-scroll-area class="card-scroll__content2">
         <q-tree :nodes="rows" v-model:selected="selected" v-model:ticked="ticked" v-model:expanded="expanded" node-key="_id"
                 tick-strategy="leaf" :filter="pagination.filter" :filter-method="onFilter">
           <template v-slot:default-header="prop">
@@ -190,7 +198,19 @@ export default defineComponent({
 .selected .node-label {
   color: #2196f3 !important;
 }
-.tooltip-action {
+.q-tree__node-header-content {
+  .tooltip-action {
+    display: none;
+    padding-left: 20px;
+  }
+  &:hover {
+    .tooltip-action {
+      display: initial;
+    }
+  }
+}
+body.mobile .tooltip-action {
+  display: initial;
   position: absolute;
   right: 0;
   .q-btn__content {

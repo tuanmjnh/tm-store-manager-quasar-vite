@@ -4,10 +4,10 @@
       <div v-if="$route.path!=='/orders/view'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.orders')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('route.orders')}}</q-toolbar-title>
       <q-btn icon="add" flat round dense color="blue" @click="isDialogAdd=!isDialogAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md" style="min-width:356px">
           <!-- <div class="q-pa-md"> -->
           <div class="row">
@@ -72,7 +72,7 @@
                 </q-list>
               </q-btn-dropdown> -->
               <!-- <q-btn flat round dense icon="info" color="light-green" :size="$store.getters.dense.table?'sm':'md'" @click="onDetails(e)">
-                <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.details')}}</q-tooltip>
+                <q-tooltip>{{$t('global.details')}}</q-tooltip>
               </q-btn> -->
               <q-btn no-caps class="q-btn--square" @click="onConfirmBill(e)">
                 <q-icon name="check" color="blue" size="18px" />
@@ -177,7 +177,7 @@
         <div class="col-auto">
           <q-btn flat dense icon="arrow_back" v-close-popup></q-btn>
         </div>
-        <span class="text-subtitle1">{{$t('product.exportBallotDetails')}}</span>
+        <span>{{$t('product.exportBallotDetails')}}</span>
       </q-toolbar>
       <q-separator />
       <!-- <q-scroll-area style="height:calc(100vh - 180px)"> -->

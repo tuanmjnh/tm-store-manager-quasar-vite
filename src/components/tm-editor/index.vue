@@ -46,6 +46,7 @@ import { defineComponent, defineAsyncComponent, ref } from 'vue';
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 export default defineComponent({
+  name: 'TMEditor',
   components: {
     tmFiles: defineAsyncComponent(() => import('components/tm-files'))
   },

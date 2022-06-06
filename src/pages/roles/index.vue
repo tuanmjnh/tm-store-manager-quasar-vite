@@ -1,13 +1,13 @@
 <template>
-  <q-card>
+  <q-card flat>
     <q-toolbar>
       <div v-if="$route.path!=='/manager/roles/view'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.roles')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('route.roles')}}</q-toolbar-title>
       <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" @click="onAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
+        <q-tooltip>{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <!-- <div class="q-pa-md"> -->
           <div class="row">
@@ -30,32 +30,63 @@
         </q-menu>
       </q-btn>
     </q-toolbar>
-
     <!-- <q-separator /> -->
     <q-card-section class="q-pa-none">
-      <q-list separator id="scroll-items" class="scroll" style="height:calc(100vh - 99px)">
+      <q-list separator id="scroll-items" class="scroll card-scroll__content">
         <q-infinite-scroll ref="refScrollTarget" @load="onScrollLoad" :offset="250">
-          <q-item clickable v-ripple v-for="e in rows" :key="e._id" v-touch-swipe.mouse.left="()=>{onTrash(e)}"
-                  v-touch-swipe.mouse.right="()=>{onEdit(e)}" v-touch-hold.mouse="()=>{onTouchHold(e)}">
-            <q-item-section>
-              <q-item-label>
-                <q-badge class="bri" :style="{backgroundColor:e.color}">
-                  {{e.name}}
-                </q-badge>
-              </q-item-label>
-              <q-item-label caption lines="1">{{`${$t('roles.key')}: ${e.key}`}}</q-item-label>
-            </q-item-section>
-            <q-item-section side top lines="1">
-              {{`${$t('global.level')}: ${e.level}`}}
-            </q-item-section>
-          </q-item>
+          <template v-if="$q.platform.is.mobile">
+            <tm-swipeitem v-for="(e,i) in rows" :key="i" leftValue="max" rightValue="111" v-touch-hold.mouse="()=>{onTouchHold(e)}">
+              <template v-if="isRoutes.edit||isRoutes.trash" v-slot:right>
+                <q-btn v-if="isRoutes.edit" no-caps class="q-btn--square" color="blue" @click="onEdit(e)">
+                  <q-icon name="edit" size="18px" />
+                </q-btn>
+                <q-btn v-if="isRoutes.trash" no-caps class="q-btn--square" color="negative" @click="onTrash(e)">
+                  <q-icon name="clear" size="18px" />
+                </q-btn>
+              </template>
+              <q-item clickable v-ripple>
+                <q-item-section>
+                  <q-item-label>
+                    <q-badge class="bri" :style="{backgroundColor:e.color}">
+                      {{e.name}}
+                    </q-badge>
+                  </q-item-label>
+                  <q-item-label caption lines="1">{{`${$t('roles.key')}:`}} <b>{{e.key}}</b></q-item-label>
+                </q-item-section>
+                <q-item-section side lines="1">
+                  {{`${$t('global.level')}: ${e.level}`}}
+                </q-item-section>
+              </q-item>
+            </tm-swipeitem>
+          </template>
+          <template v-else>
+            <q-item clickable v-ripple v-for="(e,i) in rows" :key="i">
+              <q-item-section>
+                <q-item-label>
+                  <q-badge class="bri" :style="{backgroundColor:e.color}">
+                    {{e.name}}
+                  </q-badge>
+                </q-item-label>
+                <q-item-label caption lines="1">{{`${$t('roles.key')}: ${e.key}`}}</q-item-label>
+              </q-item-section>
+              <q-item-section lines="1">
+                {{`${$t('global.level')}: ${e.level}`}}
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="edit" color="blue" size="18px" @click="onEdit(e)" />
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="clear" color="negative" size="18px" @click="onTrash(e)" />
+              </q-item-section>
+            </q-item>
+          </template>
         </q-infinite-scroll>
       </q-list>
     </q-card-section>
   </q-card>
   <!-- Dialog Add -->
-  <q-dialog v-model="isDialogAdd" :maximized="isMaximized">
-    <add-item />
+  <q-dialog v-model="isDialogAdd" :maximized="isMaximized" persistent>
+    <add-item v-model:dialog="isDialogAdd" v-model:maximized="isMaximized" />
   </q-dialog>
   <!-- Dialog Actions -->
   <q-dialog v-model="isDialogTouchHold" position="bottom">
@@ -95,7 +126,7 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "RolesIndex",
   components: {
-    // tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
     addItem: defineAsyncComponent(() => import('./add.vue'))
   },
   setup () {
@@ -104,7 +135,7 @@ export default defineComponent({
     const $q = useQuasar()
     const { t } = useI18n({ useScope: 'global' })
     const isDialogAdd = ref(false)
-    const isMaximized = ref(true)
+    const isMaximized = ref(false)
     const isDialogTouchHold = ref(false)
     const refScrollTarget = ref(null)
     const isFilter = ref(false)
@@ -169,14 +200,31 @@ export default defineComponent({
         onFetch({ pagination: pagination.value }).then(x => data.value = x)
       },
       onAdd: () => {
+        if (!isRoutes.value.add) return
         $store.dispatch('roles/set')
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onEdit: (val) => {
         if (!isRoutes.value.edit) return
         if (val) selected.value = [val]
         $store.dispatch('roles/set', selected.value[0]).then(x => selected.value = [])
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onTrash: (val) => {
         if (!isRoutes.value.trash) return

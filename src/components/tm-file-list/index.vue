@@ -23,7 +23,7 @@
           </div>
         </div>
         <div v-if="viewType!=='list'" :class="`views view-box ${center?'text-center':''}`" class="scroll"
-             :style="contentHeight?`height:${contentHeight}px`:''">
+             :style="contentHeight?`height:${contentHeight}`:''">
           <q-infinite-scroll ref="refScrollTarget" @load="onScrollLoad" :offset="1">
             <div v-for="(e,i) in rows" :key="i" :style="`width:${size}px;height:${size}px`"
                  :class="['item',selected&&selected.indexOf(e)>-1?'selected':'']">
@@ -65,7 +65,7 @@
           </q-infinite-scroll>
         </div>
         <div v-else class="views view-list">
-          <q-list separator class="scroll" :style="contentHeight?`height:${contentHeight}px`:''">
+          <q-list separator class="scroll" :style="contentHeight?`height:${contentHeight}`:''">
             <q-infinite-scroll ref="refScrollTarget" @load="onScrollLoad" :offset="50">
               <q-item v-for="(e,i) in rows" :key="i">
                 <q-item-section avatar>
@@ -119,7 +119,7 @@
           </div>
         </div>
         <div v-if="viewType!=='list'" :class="`views view-box ${center?'text-center':''}`" class="scroll"
-             :style="contentHeight?`height:${contentHeight}px`:''">
+             :style="contentHeight?`height:${contentHeight}`:''">
           <div v-for="(e,i) in rows" :key="i" :style="`width:${size}px;height:${size}px`"
                :class="['item',selected&&selected.indexOf(e)>-1?'selected':'']">
             <div @click="onSelectItem(e)">
@@ -154,7 +154,7 @@
           </div>
         </div>
         <div v-else class="views view-list">
-          <q-list separator class="scroll" :style="contentHeight?`height:${contentHeight}px`:''">
+          <q-list separator class="scroll" :style="contentHeight?`height:${contentHeight}`:''">
             <q-item v-for="(e,i) in rows" :key="i">
               <q-item-section avatar>
                 <q-img :src="e.url" spinner-color="primary" fit="cover" v-if="Extension.isImage(e.name)">
@@ -200,9 +200,8 @@
 
 <script>
 import { defineComponent, ref, computed, onMounted } from 'vue';
-import * as extension from '../../../../global/utils/extension'
+import * as extension from '../../utils/extension'
 import { useQuasar } from 'quasar'
-import { number } from '@intlify/core-base';
 
 export default defineComponent({
   name: 'TMFileList',
@@ -223,7 +222,7 @@ export default defineComponent({
     viewType: { type: String, default: 'box' },
     minHeight: { type: String, default: '200px' },
     maxHeight: { type: String, default: '200px' },
-    contentHeight: { type: Number, default: 500 },
+    contentHeight: { type: String, default: '100%' },
     labelViewList: { type: String, default: 'View list' },
     labelViewBox: { type: String, default: 'View box' },
     labelIndex: { type: String, default: 'Index' },

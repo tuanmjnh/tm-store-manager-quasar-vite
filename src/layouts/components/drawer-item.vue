@@ -27,7 +27,7 @@
 import { defineComponent, defineAsyncComponent, ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { openURL } from 'quasar'
+import { useQuasar, openURL } from 'quasar'
 import { isExternal } from '../../utils/validate'
 export default defineComponent({
   name: 'DrawerItemLayout',
@@ -47,6 +47,7 @@ export default defineComponent({
     const $route = useRoute()
     const $router = useRouter()
     const $store = useStore()
+    const $q = useQuasar()
     const isActive = computed(() => { return $route.matched.map(x => x.name).indexOf(props.item.name) > -1 || false })
     const isDialog = ref(false)
     const isMaximized = ref(true)
@@ -79,7 +80,7 @@ export default defineComponent({
         } else return false
       },
       onRouterLink (val) {
-        if (val.meta.dialog) {
+        if (val.meta.dialog && $q.platform.is.mobile) {
           $store.commit('app/LEFT_DRAWER', false)
           component.value = val.meta.component
           $store.dispatch('app/setComponentLoaded', val)

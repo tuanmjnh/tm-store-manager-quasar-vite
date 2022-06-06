@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     component () {
-      return defineAsyncComponent(() => import(`@/${this.componentName}.vue`))
+      return defineAsyncComponent(() => import(`../${this.componentName}`))
     }
   }
 }

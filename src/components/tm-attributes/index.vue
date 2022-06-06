@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-mb-md">
+  <div class="row">
     <div class="col">
       <span class="q-pt-md">{{labelTitle}}</span>
     </div>
@@ -13,29 +13,29 @@
         <q-tooltip v-if="!$q.platform.is.mobile">{{labelBtnAdd}}</q-tooltip>
       </q-btn>
     </div>
-    <div class="col-12 col-md-10">
-      <div class="row">
-        <div class="col-12 col-md-5">
-          <q-select v-model="key" use-input input-debounce="300" :dense="dense" :options-dense="dense" :options="keys" :label="labelInputKey"
-                    :hint="hintKey" new-value-mode="add-unique" @filter="onFilterKeyLocal">
-            <template v-slot:prepend>
-              <q-icon :name="inputKeyIcon" />
-            </template>
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">{{labelNoData}}</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-        <q-space />
-        <div class="col-12 col-md-6">
-          <q-select v-model="val" use-input input-debounce="300" :dense="dense" :options-dense="dense" :options="values" :label="labelInputValue"
-                    :hint="hintVal" new-value-mode="add-unique" @filter="onFilterValueLocal">
-            <template v-slot:prepend>
-              <q-icon :name="inputValueIcon" />
-            </template>
-            <!-- <template v-slot:after>
+  </div>
+  <div class="row q-mb-md">
+    <div class="col-12 col-md-5">
+      <q-select v-model="key" use-input input-debounce="300" :dense="dense" :options-dense="dense" :options="keys" :label="labelInputKey"
+                :hint="hintKey" new-value-mode="add-unique" @filter="onFilterKeyLocal">
+        <template v-slot:prepend>
+          <q-icon :name="inputKeyIcon" />
+        </template>
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">{{labelNoData}}</q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+    </div>
+    <q-space />
+    <div class="col-12 col-md-5">
+      <q-select v-model="val" use-input input-debounce="300" :dense="dense" :options-dense="dense" :options="values" :label="labelInputValue"
+                :hint="hintVal" new-value-mode="add-unique" @filter="onFilterValueLocal">
+        <template v-slot:prepend>
+          <q-icon :name="inputValueIcon" />
+        </template>
+        <!-- <template v-slot:after>
               <q-btn v-if="indexItem!=null" round dense flat :icon="btnUpdateIcon" :color="btnUpdateColor" @click.prevent="onAddAttr">
                 <q-tooltip v-if="!$q.platform.is.mobile">{{labelBtnUpdate}}</q-tooltip>
               </q-btn>
@@ -43,17 +43,30 @@
                 <q-tooltip v-if="!$q.platform.is.mobile">{{labelBtnAdd}}</q-tooltip>
               </q-btn>
             </template> -->
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">{{labelNoData}}</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-      </div>
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">{{labelNoData}}</q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+    </div>
+    <div class="col-auto col-md-1">
     </div>
   </div>
-  <q-list>
+  <div class="row" v-for="(e,i) in modelValue" :key="i">
+    <div class="col-5">{{e.key}}</div>
+    <q-space />
+    <div class="col-5">{{e.value}}</div>
+    <div class="col-auto">
+      <q-btn flat round :color="btnEditColor" :icon="btnEditIcon" :size="btnSize" @click.prevent="onEditAttr(i,e.key,e.value)">
+        <q-tooltip v-if="!$q.platform.is.mobile">{{btnEditLabel}}</q-tooltip>
+      </q-btn>
+      <q-btn flat round :color="btnDeleteColor" :icon="btnDeleteIcon" :size="btnSize" @click.prevent="onRemoveAttr(i)">
+        <q-tooltip v-if="!$q.platform.is.mobile">{{btnDeleteLabel}}</q-tooltip>
+      </q-btn>
+    </div>
+  </div>
+  <!-- <q-list>
     <q-item v-for="(e,i) in modelValue" :key="i">
       <q-item-section>
         <q-item-label>{{e.key}}</q-item-label>
@@ -72,7 +85,7 @@
         </div>
       </q-item-section>
     </q-item>
-  </q-list>
+  </q-list> -->
 </template>
 
 <script>

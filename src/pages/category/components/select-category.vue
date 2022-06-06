@@ -14,30 +14,34 @@
       </template>
     </q-input>
     <q-dialog v-model="isDialog" :maximized="maximized">
-      <q-card style="width:500px">
-        <q-toolbar>
-          <q-btn flat round dense icon="arrow_back" v-close-popup @click="onCancel">
-            <q-tooltip>{{labelClose}}</q-tooltip>
-          </q-btn>
+      <q-card style="min-width:60%">
+        <q-toolbar v-if="$q.platform.is.mobile">
+          <q-btn flat round dense icon="arrow_back" v-close-popup @click="onCancel" />
           <q-toolbar-title>{{labelTitle}}</q-toolbar-title>
         </q-toolbar>
+        <q-toolbar v-else>
+          <q-toolbar-title>{{labelTitle}}</q-toolbar-title>
+          <q-btn flat round dense icon="close" :disable="$store.state.app.loading.post||$store.state.app.loading.put" v-close-popup>
+            <q-tooltip>{{$t('global.cancel')}}</q-tooltip>
+          </q-btn>
+        </q-toolbar>
         <q-separator />
-        <q-scroll-area style="height:calc(100vh - 180px)">
-          <q-card-section>
-            <q-tree :nodes="categoriesLocal" v-model:selected="selectedTree" :node-key="optionValue" :default-expand-all="defaultExpandAll"
-                    v-model:expanded="expandedLocal" :no-nodes-label="$t('table.noData')" :no-results-label="$t('table.noData')">
-              <template v-slot:default-header="prop">
-                <div class="row items-center" @click="onSelected(prop.node)" clickable v-close-popup>
-                  <q-icon :name="prop.node.icon||'share'" color="blue-grey" size="20px" class="q-mr-sm" />
-                  <div :class="['node-label q-pr-md']" :style="onStyleSelected(prop.node)">
-                    {{prop.node[optionLabel]}}
-                    <!-- :style="{color:selectedTree===prop.node[optionValue]?'#2196f3':(prop.node.color?prop.node.color:'#607d8b')}"> -->
-                  </div>
+        <!-- <q-scroll-area class="card-scroll__content-add-tab"> -->
+        <q-card-section class="scroll" style="max-height:500px">
+          <q-tree :nodes="categoriesLocal" v-model:selected="selectedTree" :node-key="optionValue" :default-expand-all="defaultExpandAll"
+                  v-model:expanded="expandedLocal" :no-nodes-label="$t('table.noData')" :no-results-label="$t('table.noData')">
+            <template v-slot:default-header="prop">
+              <div class="row items-center" @click="onSelected(prop.node)" clickable v-close-popup>
+                <q-icon :name="prop.node.icon||'share'" color="blue-grey" size="20px" class="q-mr-sm" />
+                <div :class="['node-label q-pr-md']" :style="onStyleSelected(prop.node)">
+                  {{prop.node[optionLabel]}}
+                  <!-- :style="{color:selectedTree===prop.node[optionValue]?'#2196f3':(prop.node.color?prop.node.color:'#607d8b')}"> -->
                 </div>
-              </template>
-            </q-tree>
-          </q-card-section>
-        </q-scroll-area>
+              </div>
+            </template>
+          </q-tree>
+        </q-card-section>
+        <!-- </q-scroll-area> -->
       </q-card>
     </q-dialog>
   </div>

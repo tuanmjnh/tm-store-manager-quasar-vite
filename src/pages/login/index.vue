@@ -1,73 +1,75 @@
 <template>
-  <q-layout view="lHh Lpr lFf" :class="$q.dark.isActive?'':'bg-gradient'">
-    <!-- <loading :class="isSpinner?'':'hidden'" /> -->
-    <!-- <div v-if="!$store.state.auth.verified" class="window-height window-width row justify-center items-center"> -->
-    <div :class="`window-from window-width row justify-center items-center ${isSpinner?'hidden':''}`">
-      <div class="col-10 text-center q-mb-md bg-w">
-        <img :src="$store.getters.iconApp">
-        <span class="text-h6 text-white">{{title}}</span>
-      </div>
-      <q-form ref="form" class="col-10">
-        <q-card class="q-pb-md q-pt-md">
-          <q-card-section>
-            <div class="row">
-              <div class="col-auto q-pl-sm">
-                <q-toggle v-model="darkMode" label="Dark mode" size="xs" color="blue-grey" style="white-space:nowrap"
-                          :class="$store.getters.darkMode?'':'q-toggle-setting'" />
-              </div>
-              <q-space />
-              <div class="col-auto">
-                <q-btn-dropdown flat no-caps dense :color="$store.getters.darkMode?'':'blue-grey'">
-                  <template v-slot:label>
-                    <div class="row items-center no-wrap">
-                      <span :class="`fi fi-${$store.getters.language}`" />
-                    </div>
-                  </template>
-                  <q-list dense class="btn-language-list">
-                    <template v-for="(e,i) in languages" :key="i">
-                      <q-item :active="`${e.cc_iso}-${e.cc}`===$store.getters.language?true:false" clickable v-close-popup @click="onSetLanguage(e)">
-                        <q-item-section avatar><span :class="`fi fi-${e.cc_iso}-${e.cc}`" /></q-item-section>
-                        <q-item-section>{{e.name_l}}</q-item-section>
-                      </q-item>
+  <q-layout v-if="!$store.state.auth.user" view="lHh Lpr lFf" :class="$q.dark.isActive?'':'bg-gradient'">
+    <!-- <div v-if="!$store.state.auth.user" class="window-height window-width row justify-center items-center"> -->
+    <div :class="`window-from window-width row justify-center items-center ${$store.state.auth.loading?'hidden':''}`">
+      <div class="col-10 col-md-4">
+        <div class="text-center q-mb-md bg-w">
+          <img :src="$store.getters.iconApp">
+          <span class="text-h6 text-white">{{title}}</span>
+        </div>
+        <q-form ref="form">
+          <q-card class="q-pb-md q-pt-md">
+            <q-card-section>
+              <div class="row">
+                <div class="col-auto q-pl-sm">
+                  <q-toggle v-model="darkMode" label="Dark mode" size="xs" color="blue-grey" style="white-space:nowrap"
+                            :class="$store.getters.darkMode?'':'q-toggle-setting'" />
+                </div>
+                <q-space />
+                <div class="col-auto">
+                  <q-btn-dropdown flat no-caps dense :color="$store.getters.darkMode?'':'blue-grey'">
+                    <template v-slot:label>
+                      <div class="row items-center no-wrap">
+                        <span :class="`fi fi-${$store.getters.language}`" />
+                      </div>
                     </template>
-                  </q-list>
-                </q-btn-dropdown>
+                    <q-list dense class="btn-language-list">
+                      <template v-for="(e,i) in languages" :key="i">
+                        <q-item :active="`${e.cc_iso}-${e.cc}`===$store.getters.language?true:false" clickable v-close-popup
+                                @click="onSetLanguage(e)">
+                          <q-item-section avatar><span :class="`fi fi-${e.cc_iso}-${e.cc}`" /></q-item-section>
+                          <q-item-section>{{e.name_l}}</q-item-section>
+                        </q-item>
+                      </template>
+                    </q-list>
+                  </q-btn-dropdown>
+                </div>
               </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="q-pl-md q-pr-md">
-              <q-input v-model.trim="data.username" :dense="$store.getters.dense.input" v-lowerCase
-                       :placeholder="$t('login.username')" :rules="[v=>v&&v.length>0||$t('error.required')]" />
-            </div>
-            <div class="q-pl-md q-pr-md q-pt-md">
-              <q-input v-model.trim="data.password" :type="passwordType" :dense="$store.getters.dense.input"
-                       :placeholder="$t('login.password')" @keyup="onCheckCapslock" @blur="isCapsTooltip=false"
-                       :rules="[v=>v&&v.length>0||$t('error.required')]" class="capsTooltip">
-                <template v-slot:append>
-                  <q-icon v-if="passwordType==='password'" name="visibility_off" @click="passwordType='text'" class="cursor-pointer" />
-                  <q-icon v-else name="visibility" @click="passwordType='password'" class="cursor-pointer" />
-                  <q-tooltip v-model="isCapsTooltip" :no-parent-event="true" :offset="[10,10]" content-class="bg-indigo">
-                    Caps lock
-                  </q-tooltip>
-                </template>
-              </q-input>
-            </div>
-            <div class="q-pl-xs q-pr-md q-pt-md">
-              <q-checkbox v-model="data.remember" :label="$t('login.remember')" />
-            </div>
-          </q-card-section>
-          <!-- <q-separator dark inset /> -->
-          <q-card-actions align="center">
-            <q-btn type="submit" class="q-btn--square" no-caps color="blue" :label="$t('login.login')" :loading="$store.getters.loading.post"
-                   :disable="$store.getters.loading.post" @click.prevent="onSubmit">
-              <!-- <q-tooltip>{{$t('global.add')}}</q-tooltip> -->
-            </q-btn>
-            <!-- <div class="brand-color text-center row inline flex-center text-white bg-primary">{{$t('login.login')}}</div> -->
-            <!-- <q-btn flat>Action 2</q-btn> -->
-          </q-card-actions>
-        </q-card>
-      </q-form>
+            </q-card-section>
+            <q-card-section>
+              <div class="q-pl-md q-pr-md">
+                <q-input v-model.trim="data.username" :dense="$store.getters.dense.input" v-lowerCase
+                         :placeholder="$t('login.username')" :rules="[v=>v&&v.length>0||$t('error.required')]" />
+              </div>
+              <div class="q-pl-md q-pr-md q-pt-md">
+                <q-input v-model.trim="data.password" :type="passwordType" :dense="$store.getters.dense.input"
+                         :placeholder="$t('login.password')" @keyup="onCheckCapslock" @blur="isCapsTooltip=false"
+                         :rules="[v=>v&&v.length>0||$t('error.required')]" class="capsTooltip">
+                  <template v-slot:append>
+                    <q-icon v-if="passwordType==='password'" name="visibility_off" @click="passwordType='text'" class="cursor-pointer" />
+                    <q-icon v-else name="visibility" @click="passwordType='password'" class="cursor-pointer" />
+                    <q-tooltip v-model="isCapsTooltip" :no-parent-event="true" :offset="[10,10]" content-class="bg-indigo">
+                      Caps lock
+                    </q-tooltip>
+                  </template>
+                </q-input>
+              </div>
+              <div class="q-pl-xs q-pr-md q-pt-md">
+                <q-checkbox v-model="data.remember" :label="$t('login.remember')" />
+              </div>
+            </q-card-section>
+            <!-- <q-separator dark inset /> -->
+            <q-card-actions align="center">
+              <q-btn type="submit" class="q-btn--square" no-caps color="blue" :label="$t('login.login')" :loading="$store.getters.loading.post"
+                     :disable="$store.getters.loading.post" @click.prevent="onSubmit">
+                <!-- <q-tooltip>{{$t('global.add')}}</q-tooltip> -->
+              </q-btn>
+              <!-- <div class="brand-color text-center row inline flex-center text-white bg-primary">{{$t('login.login')}}</div> -->
+              <!-- <q-btn flat>Action 2</q-btn> -->
+            </q-card-actions>
+          </q-card>
+        </q-form>
+      </div>
     </div>
   </q-layout>
 </template>
@@ -92,7 +94,6 @@ export default defineComponent({
 
     // Data
     const title = process.env.APP_NAME
-    const isSpinner = ref(false)
     const languages = computed(() => $store.getters.languages)
     const language = computed(() => { return languages.value.find(x => `${x.cc_iso}-${x.cc}` === $store.getters.language) })
     const darkMode = computed({
@@ -125,7 +126,7 @@ export default defineComponent({
       })
     }
     return {
-      title, form, data, passwordType, isCapsTooltip, languages, darkMode, isSpinner,
+      title, form, data, passwordType, isCapsTooltip, languages, darkMode,
       onSetLanguage (item) {
         if (language.value !== item) {
           // locale.value = data.language
@@ -147,17 +148,13 @@ export default defineComponent({
       onSubmit: async () => {
         form.value.validate().then(valid => {
           if (valid) {
-            isSpinner.value = true
-            setTimeout(() => {
-              $store.dispatch('auth/verify', data.value).then(async rs => {
+            $store.dispatch('auth/verify', data.value).then(async rs => {
+              if (rs) {
+                const redirect = $route.query && $route.query.redirect ? $route.query.redirect : '/'
+                $router.push(redirect).catch((e) => { })
                 await onSetGlobalData()
-                isSpinner.value = false
-                if (rs) {
-                  const redirect = $route.query && $route.query.redirect ? $route.query.redirect : '/'
-                  $router.push(redirect).catch((e) => { })
-                }
-              })
-            }, 800)
+              }
+            })
           }
         })
       }

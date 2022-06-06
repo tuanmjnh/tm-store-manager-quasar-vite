@@ -116,7 +116,7 @@ module.exports = configure(function (ctx) {
       port: 8000,
       proxy: {
         '/api': {
-          // target: 'https://tm-store-api-opkgzsyymq-uc.a.run.app',
+          // target: 'https://tm-store-api.herokuapp.com',
           target: 'http://localhost:8080',
           // pathRewrite: { '^/api': '' },
           changeOrigin: true,

@@ -4,7 +4,7 @@
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('warehouse.orderAdd')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('warehouse.orderAdd')}}</q-toolbar-title>
       <q-btn icon="find_in_page" flat round dense color="blue" @click="isDialogProductList=!isDialogProductList" />
       <q-btn icon="qr_code_scanner" flat round dense color="blue" @click="isDialogQRCode=!isDialogQRCode" />
       <q-btn icon="add_task" flat round dense color="blue" class="q-ml-sm" :disable="rows.length<1" @click="onSubmit" />

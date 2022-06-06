@@ -4,7 +4,7 @@
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title>{{$t('global.import')}} {{$t("route.users").toLowerCase()}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('global.import')}} {{$t("route.news").toLowerCase()}}</q-toolbar-title>
       <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
       <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
     </q-toolbar>
@@ -41,7 +41,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "UserImport",
+  name: "NewsImport",
   props: {
     dialog: { type: Boolean, default: false },
     maximized: { type: Boolean, default: false }

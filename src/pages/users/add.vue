@@ -1,14 +1,36 @@
 <template>
-  <q-card>
-    <q-toolbar>
+  <q-card flat style="min-width:60%">
+    <q-toolbar v-if="$q.platform.is.mobile">
       <div class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">
+      <q-toolbar-title>
         {{data._id?`${$t('route.edit')} ${$t("route.users").toLowerCase()}`:`${$t('route.add')} ${$t("route.users").toLowerCase()}`}}
       </q-toolbar-title>
-      <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(true)" />
-      <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(false)" />
+      <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)" />
+      <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)" />
+    </q-toolbar>
+    <q-toolbar v-else>
+      <q-toolbar-title>
+        {{data._id?`${$t('route.edit')} ${$t("route.users").toLowerCase()}`:`${$t('route.add')} ${$t("route.users").toLowerCase()}`}}
+      </q-toolbar-title>
+      <q-btn icon="offline_pin" flat round dense color="blue" class="q-mr-sm" @click="onSubmit(1)">
+        <q-tooltip>{{data._id?$t('global.update'):$t('global.add')}}</q-tooltip>
+      </q-btn>
+      <q-btn icon="draw" flat round dense color="amber" @click="onSubmit(0)">
+        <q-tooltip>{{$t('global.drafts')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-if="dialog" flat round dense :disable="$store.state.app.loading.post||$store.state.app.loading.put"
+             :icon="maximized?'fullscreen_exit':'fullscreen'" @click="$emit('update:maximized',!maximized)">
+        <q-tooltip>{{maximized?$t('global.normalScreen'):$t('global.fullScreen')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-if="dialog" flat round dense icon="close" :disable="$store.state.app.loading.post||$store.state.app.loading.put" v-close-popup>
+        <q-tooltip>{{$t('global.cancel')}}</q-tooltip>
+      </q-btn>
+      <q-btn v-else flat round dense icon="reply" :disable="$store.state.app.loading.post||$store.state.app.loading.put"
+             @click="$router.push('view')">
+        <q-tooltip>{{$t('global.back')}}</q-tooltip>
+      </q-btn>
     </q-toolbar>
     <q-separator />
     <q-card-section class="q-pa-none">
@@ -19,7 +41,7 @@
           <q-tab name="avatar" :label="$t('global.avatar')" />
         </tm-tabs>
         <q-separator />
-        <q-tab-panel name="main" id="tab-main" class="scroll" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="main" id="tab-main" class="scroll card-scroll__content-add-tab">
           <div class="row q-gutter-xs">
             <div class="col-12">
               <q-select v-model="group" input-debounce="200" :dense="$store.getters.dense.input" :options="groups" :label="$t('users.group')"
@@ -151,7 +173,7 @@
             </div>
           </div>
         </q-tab-panel>
-        <q-tab-panel name="roles" id="tab-roles" class="scroll" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="roles" id="tab-roles" class="scroll hidden card-scroll__content-add-tab">
           <q-tree class="col-12 col-sm-6" :nodes="roles" :dense="$store.getters.dense.input" v-model:ticked="data.roles" node-key="_id"
                   label-key="name" tick-strategy="leaf" :no-nodes-label="$t('table.noData')">
             <template v-slot:default-header="prop">
@@ -161,7 +183,7 @@
             </template>
           </q-tree>
         </q-tab-panel>
-        <q-tab-panel name="avatar" id="tab-avatar" style="height:calc(100vh - 99px)">
+        <q-tab-panel name="avatar" id="tab-avatar" class="scroll hidden card-scroll__content-add-tab">
           <tm-fileList ref="refTMFileList" v-model="data.avatar" v-model:view-type="viewType" :multiple="false" :size="353" center
                        minHeight="360px" :isDelete="false" :lblConfirmTitle="$t('messageBox.warning')" :lblConfirmContent="$t('messageBox.delete')"
                        :lblOk="$t('global.accept')" :lblCancel="$t('global.cancel')">
@@ -224,6 +246,10 @@ export default defineComponent({
     tmUpload: defineAsyncComponent(() => import('components/tm-upload/index.vue')),
     tmFileManager: defineAsyncComponent(() => import('components/tm-file-manager/index.vue')),
     // tmQrcodegenerator: defineAsyncComponent(() => import('components/tm-qrcode-generator/index.vue')),
+  },
+  props: {
+    dialog: { type: Boolean, default: false },
+    maximized: { type: Boolean, default: false }
   },
   setup (props, { emit }) {
     const $store = useStore()

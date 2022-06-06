@@ -1,13 +1,12 @@
 <template>
-  <q-card>
+  <q-card v-if="$q.platform.is.mobile" flat>
     <q-toolbar>
       <div v-if="$route.path!=='/product/list/view'" class="col-auto">
         <q-btn flat dense icon="arrow_back" v-close-popup />
       </div>
-      <q-toolbar-title class="text-subtitle1">{{$t('route.product')}}</q-toolbar-title>
+      <q-toolbar-title>{{$t('route.product')}}</q-toolbar-title>
       <q-btn v-if="isRoutes.add" icon="add" flat round dense color="blue" @click="onAdd" />
       <q-btn icon="filter_list" flat round dense color="teal">
-        <q-tooltip v-if="!$q.platform.is.mobile">{{$t('global.filter')}}</q-tooltip>
         <q-menu v-model="isFilter" class="q-pa-md">
           <!-- <div class="q-pa-md"> -->
           <div class="row">
@@ -29,10 +28,11 @@
                                @onCancel="isFilter=false" />
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <q-toggle v-model="pagination.flag" left-label :label="pagination.flag?$t('global.working'):$t('global.trash')"
-                        :false-value="0" :true-value="1" @update:model-value="onChangeFlag" />
+          <div v-if="isRoutes.trash" class="row">
+            <div class="col-auto self-center">{{$t("global.status")}}</div>
+            <q-space />
+            <div class="col-auto">
+              <q-toggle v-model="pagination.flag" :false-value="0" :true-value="1" @update:model-value="onChangeFlag" />
             </div>
           </div>
         </q-menu>
@@ -40,8 +40,7 @@
     </q-toolbar>
     <!-- <q-separator /> -->
     <q-card-section class="q-pa-none">
-      <!-- <q-scroll-area style="height:calc(100vh - 99px)"> -->
-      <q-list separator id="scroll-items" class="scroll" style="height:calc(100vh - 99px)">
+      <q-list separator id="scroll-items" class="scroll card-scroll__content">
         <q-infinite-scroll ref="refScrollTarget" @load="onScrollLoad" :offset="250">
           <tm-swipeitem v-for="(e,i) in rows" :key="i" leftValue="max" rightValue="111" v-touch-hold.mouse="()=>{onTouchHold(e)}">
             <template v-if="isRoutes.edit||isRoutes.trash" v-slot:right>
@@ -151,12 +150,153 @@
           </template>
         </q-infinite-scroll>
       </q-list>
-      <!-- </q-scroll-area> -->
     </q-card-section>
   </q-card>
+  <q-table v-else :rows="rows" :columns="columns" row-key="_id" flat :visible-columns="visibleColumns" :dense="$store.getters.dense.table"
+           selection="multiple" :no-data-label="$t('table.noData')" :filter="pagination.filter" binary-state-sort
+           :loading="$store.state.app.loading.get||$store.state.app.loading.patch" v-model:selected="selected"
+           :rows-per-page-label="$t('table.rowPerPage')" :selected-rows-label="()=>`${selected.length} ${$t('table.rowSelected')}`"
+           :rows-per-page-options="$store.state.app.rowsPerPageOptions" v-model:pagination="pagination" @request="onFetch">
+    <template v-slot:top="props">
+      <q-toolbar class="q-pa-none">
+        <q-toolbar-title>{{$t('route.product')}}</q-toolbar-title>
+        <q-btn v-if="isRoutes.add" flat round dense icon="add" color="blue" @click="onAdd">
+          <q-tooltip>{{$t("global.add")}}</q-tooltip>
+        </q-btn>
+        <q-btn v-if="isRoutes.trash && selected.length>0&&pagination.flag" flat round dense color="negative" icon="delete" @click="onTrash()">
+          <q-tooltip>{{$t("global.delete")}}</q-tooltip>
+        </q-btn>
+        <q-btn v-if="isRoutes.trash && selected.length>0&&!pagination.flag" flat round dense color="warning" icon="restore_page" @click="onTrash()">
+          <q-tooltip>{{$t("global.recover")}}</q-tooltip>
+        </q-btn>
+        <q-btn flat round dense :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click="props.toggleFullscreen">
+          <q-tooltip>{{props.inFullscreen?$t("global.normalScreen"):$t("global.fullScreen")}}</q-tooltip>
+        </q-btn>
+        <q-btn icon="filter_list" flat round dense>
+          <q-tooltip>{{$t('global.filter')}}</q-tooltip>
+          <q-menu v-model="isFilter" class="q-pa-md">
+            <div class="row">
+              <div class="col-12">
+                <q-input v-model="pagination.filter" :dense="$store.getters.dense.input" debounce="500" :placeholder="$t('global.search')"
+                         @update:model-value="onFilter">
+                  <template v-slot:append>
+                    <q-icon v-if="pagination.filter===''" name="search" />
+                    <q-icon v-else name="clear" class="cursor-pointer" @click="onFilter('')" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+            <div class="row q-mb-sm">
+              <div class="col-12">
+                <select-category v-model="pagination.categories" :categories="categories" option-value="_id" option-label="label" data-all
+                                 :dense="$store.getters.dense.input" :labelTitle="$t('category.titleproduct')" :labelSelect="$t('category.select')"
+                                 :labelAll="$t('category.selectAll')" :labelClose="$t('global.cancel')" @on-selected="onSelectCategory" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-auto self-center">{{$t("table.displayColumns")}}</div>
+              <q-space />
+              <div class="col-auto">
+                <q-btn flat round dense icon="menu_open">
+                  <q-menu fit>
+                    <q-list dense style="min-width:200px">
+                      <template v-for="(e,i) in columns">
+                        <q-item clickable :key="i" v-if="!e.required" :active="visibleColumns.indexOf(e.name)>-1||false" @click="onColumns(e.name)">
+                          <q-item-section>{{$t(e.label)}}</q-item-section>
+                        </q-item>
+                      </template>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+            </div>
+            <div v-if="isRoutes.trash" class="row">
+              <div class="col-auto self-center">{{$t("global.status")}}</div>
+              <q-space />
+              <div class="col-auto">
+                <q-toggle v-model="pagination.flag" :false-value="0" :true-value="1" @update:model-value="onChangeFlag" />
+              </div>
+            </div>
+          </q-menu>
+        </q-btn>
+      </q-toolbar>
+    </template>
+    <template v-slot:header="props">
+      <q-tr :props="props">
+        <q-th auto-width>
+          <q-checkbox v-if="props.multipleSelect" v-model="props.selected" indeterminate-value="some" :dense="$store.getters.dense.table" />
+        </q-th>
+        <q-th v-for="col in props.cols" :key="col.name" :props="props">
+          <span v-if="$store.state.app.darkMode" class="text-bold">{{$t(col.label)}}</span>
+          <span v-else class="text-bold text-blue-grey-10">{{$t(col.label)}}</span>
+        </q-th>
+        <q-th v-if="isRoutes.edit||isRoutes.trash" auto-width>#</q-th>
+      </q-tr>
+    </template>
+    <template v-slot:body="props">
+      <q-tr :props="props">
+        <q-td auto-width>
+          <q-checkbox v-model="props.selected" color="primary" :dense="$store.getters.dense.table" />
+        </q-td>
+        <q-td key="title" :props="props">
+          {{props.row.title}}
+        </q-td>
+        <q-td key="code" :props="props">
+          {{props.row.code}}
+        </q-td>
+        <q-td key="quantity" :props="props">
+          <div class="q-pr-xs flex inline">{{parseInt(props.row.quantity).NumberFormat($store.getters.language)}}</div>
+          <q-badge v-html="props.row.unitName" color="orange" transparent />
+        </q-td>
+        <q-td key="price" :props="props">
+          <div class="q-pr-xs flex inline">{{parseInt(props.row.price).NumberFormat($store.getters.language)}}</div>
+          <q-badge v-html="props.row.priceUnitName" color="blue" transparent />
+        </q-td>
+        <q-td key="priceDiscount" :props="props">
+          <div class="q-pr-xs flex inline">{{parseInt(props.row.priceDiscount).NumberFormat($store.getters.language)}}</div>
+          <q-badge v-html="props.row.priceUnitName" color="red" transparent />
+        </q-td>
+        <q-td key="priceImport" :props="props">
+          <div class="q-pr-xs flex inline">{{parseInt(props.row.priceImport).NumberFormat($store.getters.language)}}</div>
+          <q-badge v-html="props.row.priceUnitName" color="teal" transparent />
+        </q-td>
+        <q-td key="priceExport" :props="props">
+          <div class="q-pr-xs flex inline">{{parseInt(props.row.priceExport).NumberFormat($store.getters.language)}}</div>
+          <q-badge v-html="props.row.priceUnitName" color="indigo" transparent />
+        </q-td>
+        <q-td key="order" :props="props">
+          {{props.row.order}}
+        </q-td>
+        <!-- <q-td key="roles" :props="props" class="q-gutter-xs">
+            <template v-if="props.row.roles&&props.row.roles.length>0">
+              <q-badge v-for="(item,index) in onFilterRoles(props.row.roles)" :key="index"
+                :style="{backgroundColor:item.color}">
+                {{item.label}}
+              </q-badge>
+            </template>
+            <q-badge v-else color="blue-grey-10">{{$t('global.undefined')}}</q-badge>
+          </q-td> -->
+        <q-td v-if="isRoutes.edit||isRoutes.trash" auto-width class="text-center">
+          <q-btn v-if="isRoutes.edit" flat round dense icon="edit" color="light-green" :size="$store.getters.dense.table?'sm':'md'"
+                 @click="onEdit(props.row)">
+            <q-tooltip>{{$t('global.update')}}</q-tooltip>
+          </q-btn>
+          <template v-if="isRoutes.trash">
+            <q-btn v-if="pagination.flag" flat round dense color="negative" icon="clear" :size="$store.getters.dense.table?'sm':'md'"
+                   @click="onTrash(props.row)">
+              <q-tooltip>{{$t('global.lock')}}</q-tooltip>
+            </q-btn>
+            <q-btn v-else flat round dense color="amber" icon="restore" :size="$store.getters.dense.table?'sm':'md'" @click="onTrash(props.row)">
+              <q-tooltip>{{$t('global.unlock')}}</q-tooltip>
+            </q-btn>
+          </template>
+        </q-td>
+      </q-tr>
+    </template>
+  </q-table>
   <!-- Dialog Add -->
-  <q-dialog v-model="isDialogAdd" :maximized="isMaximized">
-    <add-item />
+  <q-dialog v-model="isDialogAdd" :maximized="isMaximized" persistent>
+    <add-item v-model:dialog="isDialogAdd" v-model:maximized="isMaximized" />
   </q-dialog>
   <!-- Dialog Actions -->
   <q-dialog v-model="isDialogTouchHold" position="bottom">
@@ -195,8 +335,8 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: "ProductIndex",
   components: {
-    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
     addItem: defineAsyncComponent(() => import('./add.vue')),
+    tmSwipeitem: defineAsyncComponent(() => import('components/tm-swipe-item/index.vue')),
     selectCategory: defineAsyncComponent(() => import('pages/category/components/select-category.vue'))
   },
   setup () {
@@ -220,7 +360,6 @@ export default defineComponent({
       edit: $router.hasRoute('product-list-edit'),
       trash: $router.hasRoute('product-list-trash')
     })
-
     const pagination = ref({
       filter: '',
       page: 1,
@@ -232,6 +371,17 @@ export default defineComponent({
       categories: null,
       flag: 1
     })
+    const visibleColumns = ref(['price', 'priceDiscount'])
+    const columns = ref([
+      { name: 'title', field: 'title', label: 'product.name', align: 'left', sortable: true, required: true }, // row => $t(`roles.${row.name}`)
+      { name: 'code', field: 'code', label: 'product.code', align: 'left', sortable: true, required: true },
+      { name: 'quantity', field: 'quantity', label: 'global.quantity', align: 'right', sortable: true, required: true },
+      { name: 'price', field: 'price', label: 'product.priceSale', align: 'right', sortable: true },
+      { name: 'priceDiscount', field: 'priceDiscount', label: 'product.priceDiscount', align: 'right', sortable: true },
+      { name: 'priceImport', field: 'priceImport', label: 'product.priceImport', align: 'right', sortable: true },
+      { name: 'priceExport', field: 'priceExport', label: 'product.priceExport', align: 'right', sortable: true },
+      { name: 'order', field: 'order', label: 'global.order', align: 'right', sortable: true }
+    ])
     const data = ref([])
     const rows = computed(() => data.value)
     const onFetch = (opt) => {
@@ -261,7 +411,8 @@ export default defineComponent({
         $store.dispatch('categories/get', { type: 'product', flag: 1, all: true })//.then((x) => { categories.value = x })
     }
     return {
-      isDialogAdd, isMaximized, isDialogTouchHold, refListTarget, refScrollTarget, isFilter, rows, selected, categories, pagination, isRoutes, onFetch,
+      isDialogAdd, isMaximized, isDialogTouchHold, refListTarget, refScrollTarget, isFilter, rows, selected,
+      categories, pagination, isRoutes, onFetch, visibleColumns, columns,
       onSelectCategory: (val) => {
         if (val) onFetch({ pagination: pagination.value }).then(x => {
           data.value = x
@@ -286,13 +437,29 @@ export default defineComponent({
       onAdd: () => {
         if (!isRoutes.value.add) return
         $store.dispatch('products/set')
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onEdit: (val) => {
         if (!isRoutes.value.edit) return
         if (val) selected.value = [val]
         $store.dispatch('products/set', selected.value[0]).then(x => selected.value = [])
-        isDialogAdd.value = true
+        if ($q.platform.is.mobile) {
+          isDialogAdd.value = true
+          isMaximized.value = true
+        } else if ($store.state.app.isDialog.add) {
+          isDialogAdd.value = true
+          isMaximized.value = false
+        } else {
+          $router.push('add')
+        }
       },
       onTrash (val) {
         if (!isRoutes.value.trash) return

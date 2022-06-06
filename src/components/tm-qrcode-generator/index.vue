@@ -22,7 +22,7 @@
       </div>
     </q-card-section>
     <q-separator />
-    <q-card-section class="bg-white">
+    <q-card-section class="bg-white text-center">
       <div id="tm-qrcode" class="q-mb-md">
         <q-popup-edit v-model="modelValueLocal" auto-save v-slot="scope" @update:model-value="onEditBarCode">
           <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set" />
@@ -55,8 +55,8 @@ export default defineComponent({
     logo: { type: String, default: null },
     width: { type: Number, default: 100 },
     height: { type: Number, default: 100 },
-    logoWidth: { type: Number, default: 15 },
-    logoHeight: { type: Number, default: 15 },
+    logoWidth: { type: Number, default: 18 },
+    logoHeight: { type: Number, default: 18 },
     iconScanner: { type: String, default: 'qr_code_scanner' },
     labelScanner: { type: String, default: 'QR Code Scanner' },
     iconDefault: { type: String, default: 'drive_file_rename_outline' },
